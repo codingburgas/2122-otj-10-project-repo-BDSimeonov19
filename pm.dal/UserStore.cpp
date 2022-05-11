@@ -26,3 +26,13 @@ pm::type::User pm::dal::UserStore::getById(size_t id)
 {
 	return users[id + 1];
 }
+
+void list() {
+	for (auto i : pm::dal::users) {
+		std::cout << "Id" << i.id << std::endl;
+		std::cout << "Name : " << i.firstName << " " << i.lastName << std::endl;
+		std::cout << "Age : " << i.age << std::endl;
+		std::cout << "Email : " << i.Email << std::endl;
+		std::cout << "Created on : " << i.createdOn;
+	}
+}

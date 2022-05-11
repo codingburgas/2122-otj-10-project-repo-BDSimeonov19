@@ -1,8 +1,9 @@
 #pragma once
 
 #include "../pm.types/User.h"
+#include <iostream>
 #include <vector>
-#include <string>
+
 
 namespace pm::dal {
 	std::vector<pm::type::User> users;
@@ -13,5 +14,6 @@ namespace pm::dal {
 		void remove(size_t id);
 		void update(pm::type::User user);
 		pm::type::User getById(size_t id);
+		void list();
 	};
 }
