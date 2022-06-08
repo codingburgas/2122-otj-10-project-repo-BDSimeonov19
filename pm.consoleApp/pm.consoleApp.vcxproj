@@ -21,8 +21,8 @@
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{35ab7148-7b8c-47d4-b790-1e1d58728604}</ProjectGuid>
-    <RootNamespace>main</RootNamespace>
+    <ProjectGuid>{5c5ac421-7025-4d31-bb9b-3c5da656f181}</ProjectGuid>
+    <RootNamespace>pmconsoleApp</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -140,7 +140,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="main.cpp" />
+    <ClCompile Include="pm.consoleApp.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\pm.dal\pm.dal.vcxproj">

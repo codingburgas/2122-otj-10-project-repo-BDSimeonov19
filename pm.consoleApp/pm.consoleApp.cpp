@@ -11,8 +11,8 @@ int main()
 	user.age = 16;
 	user.passwordHash = "boingboing";
 	time(&user.createdOn);
-	
-	
+
+
 	pm::dal::UserStore store;
 	store.create(user);
 	store.list();

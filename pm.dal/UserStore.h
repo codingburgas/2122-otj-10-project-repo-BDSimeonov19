@@ -6,7 +6,6 @@
 
 
 namespace pm::dal {
-	std::vector<pm::type::User> users;
 
 	struct UserStore {
 		void create(pm::type::User user);
