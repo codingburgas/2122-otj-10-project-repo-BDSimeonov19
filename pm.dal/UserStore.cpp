@@ -32,11 +32,16 @@ pm::type::User pm::dal::UserStore::getById(size_t id)
 }
 
 void pm::dal::UserStore::list() {
+	char buffer[80];
+	struct tm time;
 	for (auto i : pm::dal::users) {
 		std::cout << "Id : " << i.id << std::endl;
 		std::cout << "Name : " << i.firstName << " " << i.lastName << std::endl;
 		std::cout << "Age : " << i.age << std::endl;
 		std::cout << "Email : " << i.Email << std::endl;
-		std::cout << "Created on : " << i.createdOn;
+		const time_t* rawTime = &i.createdOn;
+		localtime_s(&time, rawTime);
+		strftime(buffer, 80, "Now it's %I:%M%p.", &time);
+		std::cout << "Created on : " << buffer;
 	}
 }
