@@ -41,7 +41,7 @@ void pm::dal::UserStore::list() {
 		std::cout << "Email : " << i.Email << std::endl;
 		const time_t* rawTime = &i.createdOn;
 		localtime_s(&time, rawTime);
-		strftime(buffer, 80, "Now it's %I:%M%p.", &time);
+		strftime(buffer, 80, "%D @ %I:%M%p", &time);
 		std::cout << "Created on : " << buffer;
 	}
 }
