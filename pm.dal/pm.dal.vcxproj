@@ -154,6 +154,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
+    <ClInclude Include="sha256.h" />
     <ClInclude Include="UserStore.h" />
   </ItemGroup>
   <ItemGroup>
@@ -164,6 +165,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="pm.dal.cpp" />
+    <ClCompile Include="sha256.cpp" />
     <ClCompile Include="UserStore.cpp" />
   </ItemGroup>
   <ItemGroup>

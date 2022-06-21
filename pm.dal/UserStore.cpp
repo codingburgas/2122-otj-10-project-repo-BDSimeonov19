@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "UserStore.h"
+#include "sha256.h"
 
 namespace pm::dal {
 	std::vector<pm::type::User> users;
@@ -59,7 +60,8 @@ std::string pm::dal::UserStore::password() {
 	while ((ch = _getch()) != '\r')
 		pass += ch;
 
-	return pass;
+	SHA256 sha256;
+	return sha256(pass);
 }
 
 pm::type::User pm::dal::UserStore::create() {
