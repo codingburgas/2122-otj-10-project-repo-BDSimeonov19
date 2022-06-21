@@ -5,8 +5,9 @@ namespace pm::dal {
 	std::vector<pm::type::User> users;
 }
 
-void pm::dal::UserStore::create(pm::type::User user)
+void pm::dal::UserStore::add(pm::type::User user)
 {
+	user.id += pm::dal::UserStore::getAll().size();
 	pm::dal::users.push_back(user);
 }
 
@@ -39,9 +40,40 @@ void pm::dal::UserStore::list() {
 		std::cout << "Name : " << i.firstName << " " << i.lastName << std::endl;
 		std::cout << "Age : " << i.age << std::endl;
 		std::cout << "Email : " << i.Email << std::endl;
+
+		//translate time_t into human readable format
 		const time_t* rawTime = &i.createdOn;
 		localtime_s(&time, rawTime);
 		strftime(buffer, 80, "%D @ %I:%M%p", &time);
-		std::cout << "Created on : " << buffer;
+		std::cout << "Created on : " << buffer << std::endl;
+
+		std::cout << std::endl << i.passwordHash;
 	}
+}
+
+
+std::string pm::dal::UserStore::password() {
+	char ch;
+	std::string pass;
+	int i = 0;
+	while ((ch = _getch()) != '\r')
+		pass += ch;
+
+	return pass;
+}
+
+pm::type::User pm::dal::UserStore::create() {
+	pm::type::User user;
+	std::cout << "First and last names\n";
+	std::cin >> user.firstName >> user.lastName;
+	std::cout << "Email\n";
+	std::cin >> user.Email;
+	std::cout << "Age\n";
+	std::cin >> user.age;
+	std::cout << "Enter password\n";
+	user.passwordHash = password();
+	user.createdOn = time(NULL);
+	user.admin = false;
+
+	return user;
 }
