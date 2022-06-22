@@ -1,6 +1,7 @@
 #pragma once
 
 #include "../pm.types/User.h"
+#include "dbLogic.h"
 #include <iostream>
 #include <vector>
 

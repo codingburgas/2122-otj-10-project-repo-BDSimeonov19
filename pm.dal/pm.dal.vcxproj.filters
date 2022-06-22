@@ -24,6 +24,9 @@
     <ClInclude Include="sha256.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="dbLogic.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pm.dal.cpp">
@@ -36,6 +39,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="sha256.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="dbLogic.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

@@ -3,13 +3,17 @@
 #include "sha256.h"
 
 namespace pm::dal {
-	std::vector<pm::type::User> users;
+	pm::dal::db::db database;
+	std::vector<pm::type::User> users = database.pullDb();
 }
 
 void pm::dal::UserStore::add(pm::type::User user)
 {
 	user.id += pm::dal::UserStore::getAll().size();
 	pm::dal::users.push_back(user);
+
+	pm::dal::db::db database;
+	database.updateDb(users);
 }
 
 std::vector<pm::type::User> pm::dal::UserStore::getAll()
@@ -20,12 +24,18 @@ std::vector<pm::type::User> pm::dal::UserStore::getAll()
 void pm::dal::UserStore::remove(size_t id)
 {
 	users.erase(users.begin() + id);
+
+	pm::dal::db::db database;
+	database.updateDb(users);
 }
 
 void pm::dal::UserStore::update(pm::type::User user)
 {
 	users.insert(users.begin() + user.id + 1, user);
 	users.erase(users.begin() + user.id);
+
+	pm::dal::db::db database;
+	database.updateDb(users);
 }
 
 pm::type::User pm::dal::UserStore::getById(size_t id)
@@ -47,8 +57,6 @@ void pm::dal::UserStore::list() {
 		localtime_s(&time, rawTime);
 		strftime(buffer, 80, "%D @ %I:%M%p", &time);
 		std::cout << "Created on : " << buffer << std::endl;
-
-		std::cout << std::endl << i.passwordHash;
 	}
 }
 
