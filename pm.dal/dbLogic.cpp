@@ -1,58 +1,76 @@
 #include "pch.h"
 #include "dbLogic.h"
 
-std::vector<pm::type::User> pm::dal::db::db::pullDb()
+pm::type::User pm::dal::db::saveUser(std::vector<std::string> data) {
+    pm::type::User user;
+    user.id = std::stoi(data[0]);
+    user.firstName = data[1];
+    user.lastName = data[2];
+    user.Email = data[3];
+    user.age = std::stoi(data[4]);
+    user.createdOn = std::stoi(data[5]);
+    user.passwordHash = data[6];
+    user.admin = std::stoi(data[7]);
+
+    return user;
+}
+
+pm::type::Team pm::dal::db::saveTeam(std::vector<std::string> data) {
+    pm::type::Team team;
+    team.id = std::stoi(data[0]);
+    team.name = data[1];
+    //team.members = 
+    team.createdOn = std::stoi(data[3]);
+    return team;
+}
+
+void pm::dal::db::pullDb(std::vector<pm::type::User>* users)
 {
-    pm::dal::db::db database;
+    pm::dal::db database;
     std::string line;
-    std::vector<pm::type::User> users;
 
 
     database.db.open("users.txt", std::ios::in);
     
     while (std::getline(database.db, line)) {
         pm::type::User temp;
-        
-        std::string data = line.substr(0, line.find('^'));
-        temp.id = std::stoi(data);
-        line.erase(0, data.length()+1);
+        std::vector<std::string> data;
+     
 
-        data = line.substr(0, line.find('^'));
-        temp.firstName = data;
-        line.erase(0, data.length() + 1);
+        for (int i = 0; i < 8; i++) {
+            data.push_back(line.substr(0, line.find('^')));
+            line.erase(0, data[i].length() + 1);
+        }
 
-        data = line.substr(0, line.find('^'));
-        temp.lastName = data;
-        line.erase(0, data.length() + 1);
-
-        data = line.substr(0, line.find('^'));
-        temp.Email = data;
-        line.erase(0, data.length() + 1);
-
-        data = line.substr(0, line.find('^'));
-        temp.age = std::stoi(data);
-        line.erase(0, data.length() + 1);
-
-        data = line.substr(0, line.find('^'));
-        temp.createdOn = std::stoi(data);
-        line.erase(0, data.length() + 1);
-
-        data = line.substr(0, line.find('^'));
-        temp.passwordHash = data;
-        line.erase(0, data.length() + 1);
-
-        data = line.substr(0, line.find('^'));
-        temp.admin = std::stoi(data);
-        line.erase(0, data.length() + 1);
-
-        users.push_back(temp);
+        users->push_back(saveUser(data));
     }
-    return users;
 }
 
-void pm::dal::db::db::updateDb(std::vector<pm::type::User> users)
+
+void pm::dal::db::pullDb(std::vector<pm::type::Team>* teams) {
+    pm::dal::db database;
+    std::string line;
+
+
+    database.db.open("teams.txt", std::ios::in);
+
+    while (std::getline(database.db, line)) {
+        pm::type::Team temp;
+        std::vector<std::string> data;
+
+
+        for (int i = 0; i < 8; i++) {
+            data.push_back(line.substr(0, line.find('^')));
+            line.erase(0, data[i].length() + 1);
+        }
+
+        teams->push_back(saveTeam(data));
+    }
+}
+
+void pm::dal::db::updateDb(std::vector<pm::type::User> users)
 {
-    pm::dal::db::db database;
+    pm::dal::db database;
     database.db.open("users.txt", std::ios::out);
 
     if (database.db.is_open()) {

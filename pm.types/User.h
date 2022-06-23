@@ -3,8 +3,6 @@
 #include "pch.h"
 #include <string>
 #include <ctime>
-#include <iostream>
-#include <conio.h>
 
 namespace pm::type {
 	struct User

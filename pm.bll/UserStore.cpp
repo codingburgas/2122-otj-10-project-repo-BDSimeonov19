@@ -2,51 +2,60 @@
 #include "UserStore.h"
 #include "sha256.h"
 
-namespace pm::dal {
-	pm::dal::db::db database;
-	std::vector<pm::type::User> users = database.pullDb();
+//constructor to pull the database info on start of program
+pm::bll::UserStore::UserStore()
+{
+	dal::db database;
+	database.pullDb(&users);
+	database.pullDb(&teams);
 }
 
-void pm::dal::UserStore::add(pm::type::User user)
+//add a new user to the database
+void pm::bll::UserStore::add(pm::type::User user)
 {
-	user.id += pm::dal::UserStore::getAll().size();
-	pm::dal::users.push_back(user);
+	user.id += pm::bll::UserStore::getAll().size();
+	pm::bll::UserStore::users.push_back(user);
 
-	pm::dal::db::db database;
+	pm::dal::db database;
 	database.updateDb(users);
 }
 
-std::vector<pm::type::User> pm::dal::UserStore::getAll()
+//returns all users
+std::vector<pm::type::User> pm::bll::UserStore::getAll()
 {
 	return users;
 }
 
-void pm::dal::UserStore::remove(size_t id)
+//remove a user by id
+void pm::bll::UserStore::remove(size_t id)
 {
 	users.erase(users.begin() + id);
 
-	pm::dal::db::db database;
+	pm::dal::db database;
 	database.updateDb(users);
 }
 
-void pm::dal::UserStore::update(pm::type::User user)
+//update a user by id
+void pm::bll::UserStore::update(pm::type::User user)
 {
 	users.insert(users.begin() + user.id + 1, user);
 	users.erase(users.begin() + user.id);
 
-	pm::dal::db::db database;
+	pm::dal::db database;
 	database.updateDb(users);
 }
 
-pm::type::User pm::dal::UserStore::getById(size_t id)
+//get a user by id
+pm::type::User pm::bll::UserStore::getById(size_t id)
 {
 	return users[id + 1];
 }
 
-void pm::dal::UserStore::list() {
+//list all users
+void pm::bll::UserStore::list() {
 	char buffer[80];
 	struct tm time;
-	for (auto i : pm::dal::users) {
+	for (auto i : users) {
 		std::cout << "Id : " << i.id << std::endl;
 		std::cout << "Name : " << i.firstName << " " << i.lastName << std::endl;
 		std::cout << "Age : " << i.age << std::endl;
@@ -60,8 +69,8 @@ void pm::dal::UserStore::list() {
 	}
 }
 
-
-std::string pm::dal::UserStore::password() {
+//hash a user's password using sha256
+std::string pm::bll::UserStore::password() {
 	char ch;
 	std::string pass;
 	int i = 0;
@@ -72,7 +81,8 @@ std::string pm::dal::UserStore::password() {
 	return sha256(pass);
 }
 
-pm::type::User pm::dal::UserStore::create() {
+//create a new user
+pm::type::User pm::bll::UserStore::create() {
 	pm::type::User user;
 	std::cout << "First and last names\n";
 	std::cin >> user.firstName >> user.lastName;

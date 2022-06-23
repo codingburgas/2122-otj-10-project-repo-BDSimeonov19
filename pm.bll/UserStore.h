@@ -1,14 +1,18 @@
 #pragma once
 
 #include "../pm.types/User.h"
+#include "../pm.types/Team.h"
 #include "../pm.dal/dbLogic.h"
 #include <iostream>
-#include <vector>
+#include <conio.h>
 
 
-namespace pm::dal {
+namespace pm::bll {
 
 	struct UserStore {
+		pm::dal::db database;
+		std::vector<pm::type::User> users;
+		std::vector<pm::type::Team> teams;
 		pm::type::User create();
 		std::string password();
 		void add(pm::type::User user);
@@ -17,5 +21,6 @@ namespace pm::dal {
 		void update(pm::type::User user);
 		pm::type::User getById(size_t id);
 		void list();
+		UserStore();
 	};
 }
