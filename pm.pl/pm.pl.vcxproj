@@ -21,8 +21,8 @@
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{6b8ff0e6-5e54-450b-968f-c15c216a2f07}</ProjectGuid>
-    <RootNamespace>pmbll</RootNamespace>
+    <ProjectGuid>{031b5410-a7ab-4c6c-bc37-5454bddf721b}</ProjectGuid>
+    <RootNamespace>pmpl</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -42,13 +42,13 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
@@ -153,31 +153,18 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="menuLogic.h" />
+    <ClInclude Include="Menu.h" />
     <ClInclude Include="pch.h" />
-    <ClInclude Include="sha256.h" />
-    <ClInclude Include="TeamStore.h" />
-    <ClInclude Include="UserStore.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="menuLogic.cpp" />
+    <ClCompile Include="Menu.cpp" />
     <ClCompile Include="pch.cpp">
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="pm.bll.cpp" />
-    <ClCompile Include="sha256.cpp" />
-    <ClCompile Include="UserStore.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\pm.dal\pm.dal.vcxproj">
-      <Project>{24361256-6263-4f0f-9d6e-36b3b94aba8d}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\pm.pl\pm.pl.vcxproj">
-      <Project>{031b5410-a7ab-4c6c-bc37-5454bddf721b}</Project>
-    </ProjectReference>
+    <ClCompile Include="pm.pl.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
