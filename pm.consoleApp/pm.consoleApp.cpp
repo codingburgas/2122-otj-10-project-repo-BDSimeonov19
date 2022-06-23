@@ -1,5 +1,6 @@
 #include <iostream>
-#include "../pm.dal/UserStore.h"
+#include "../pm.bll/UserStore.h"
+
 int main()
 {
 	pm::type::User user;
