@@ -36,8 +36,9 @@ void pm::bll::UserStore::remove(size_t id)
 }
 
 //update a user by id
-void pm::bll::UserStore::update(pm::type::User user)
+void pm::bll::UserStore::update(pm::type::User user, size_t id)
 {
+	user.id = id;
 	users.insert(users.begin() + user.id + 1, user);
 	users.erase(users.begin() + user.id);
 

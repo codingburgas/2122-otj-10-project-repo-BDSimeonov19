@@ -8,4 +8,5 @@
 namespace pm::bll {
 	void mainMenu(pm::bll::UserStore*);
 	void logInMenu(pm::bll::UserStore*);
+	void usersMenu(pm::bll::UserStore*);
 }

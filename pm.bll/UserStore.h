@@ -18,11 +18,11 @@ namespace pm::bll {
 
 		pm::type::User create();
 		std::string password();
-		void add(pm::type::User user);
+		void add(pm::type::User);
 		std::vector<pm::type::User> getAll();
-		void remove(size_t id);
-		void update(pm::type::User user);
-		pm::type::User getById(size_t id);
+		void remove(size_t);
+		void update(pm::type::User, size_t);
+		pm::type::User getById(size_t);
 		void list();
 		bool logIn();
 		UserStore();
