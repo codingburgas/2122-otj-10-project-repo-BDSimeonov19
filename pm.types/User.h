@@ -13,7 +13,12 @@ namespace pm::type {
 		std::string Email = "";
 		unsigned short age = 0;
 		std::string passwordHash = "";
+
 		std::time_t createdOn = 0;
+		size_t idOfCreator = 0;
+		std::time_t lastChange = 0;
+		size_t idOfChanger = 0;
+
 		bool admin = 0;
 	};
 }

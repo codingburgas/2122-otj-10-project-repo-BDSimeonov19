@@ -74,15 +74,18 @@ void pm::dal::db::updateDb(std::vector<pm::type::User> users)
     database.db.open("users.txt", std::ios::out);
 
     if (database.db.is_open()) {
-        for (auto i : users) {
-            database.db << i.id << '^';
-            database.db << i.firstName << '^';
-            database.db << i.lastName << '^';
-            database.db << i.Email << '^';
-            database.db << i.age << '^';
-            database.db << i.createdOn << '^';
-            database.db << i.passwordHash << '^';
-            database.db << i.admin << std::endl;
+        for (auto i = users.begin() + 1; i < users.end(); i++) {
+            database.db << i->id << '^';
+            database.db << i->firstName << '^';
+            database.db << i->lastName << '^';
+            database.db << i->Email << '^';
+            database.db << i->age << '^';
+            database.db << i->createdOn << '^';
+            database.db << i->idOfCreator << '^';
+            database.db << i->lastChange << '^';
+            database.db << i->idOfChanger << '^';
+            database.db << i->passwordHash << '^';
+            database.db << i->admin << std::endl;
         }
 
         database.db.close();

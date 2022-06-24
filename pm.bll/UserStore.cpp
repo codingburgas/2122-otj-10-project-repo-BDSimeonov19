@@ -43,6 +43,9 @@ void pm::bll::UserStore::update(pm::type::User user, size_t id)
 	users.insert(users.begin() + user.id + 1, user);
 	users.erase(users.begin() + user.id);
 
+	user.lastChange = time(NULL);
+	user.idOfChanger = loggedInUser.id;
+
 	pm::dal::db database;
 	database.updateDb(users);
 }
@@ -74,6 +77,15 @@ void pm::bll::UserStore::listById(size_t id) {
 	localtime_s(&time, rawTime);
 	strftime(buffer, 80, "%D @ %I:%M%p", &time);
 	std::cout << "Created on : " << buffer << std::endl;
+
+	std::cout << "Id of creator : " << users[id].idOfCreator << std::endl;
+	
+	rawTime = &users[id].lastChange;
+	localtime_s(&time, rawTime);
+	strftime(buffer, 80, "%D @ %I:%M%p", &time);
+	std::cout << "Last change on : " << buffer << std::endl;
+
+	std::cout << "Id of the user that did the last change : " << users[id].idOfChanger << std::endl;
 }
 
 //hash a user's password using sha256
@@ -100,6 +112,9 @@ pm::type::User pm::bll::UserStore::create() {
 	std::cout << "Enter password\n";
 	user.passwordHash = password();
 	user.createdOn = time(NULL);
+	user.idOfCreator = loggedInUser.id;
+	user.lastChange = time(NULL);
+	user.idOfChanger = loggedInUser.id;
 	user.admin = false;
 
 	return user;
