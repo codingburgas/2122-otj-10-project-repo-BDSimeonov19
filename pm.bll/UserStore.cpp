@@ -40,11 +40,14 @@ void pm::bll::UserStore::remove(size_t id)
 void pm::bll::UserStore::update(pm::type::User user, size_t id)
 {
 	user.id = id;
-	users.insert(users.begin() + user.id + 1, user);
-	users.erase(users.begin() + user.id);
-
+	user.createdOn = users[id].createdOn;
+	user.idOfCreator = users[id].idOfCreator;
 	user.lastChange = time(NULL);
 	user.idOfChanger = loggedInUser.id;
+
+
+	users.insert(users.begin() + user.id + 1, user);
+	users.erase(users.begin() + user.id);
 
 	pm::dal::db database;
 	database.updateDb(users);

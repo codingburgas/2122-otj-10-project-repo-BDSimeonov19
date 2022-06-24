@@ -9,8 +9,11 @@ pm::type::User pm::dal::db::saveUser(std::vector<std::string> data) {
     user.Email = data[3];
     user.age = std::stoi(data[4]);
     user.createdOn = std::stoi(data[5]);
-    user.passwordHash = data[6];
-    user.admin = std::stoi(data[7]);
+    user.idOfCreator = std::stoi(data[6]);
+    user.lastChange = std::stoi(data[7]);
+    user.idOfChanger = std::stoi(data[8]);
+    user.passwordHash = data[9];
+    user.admin = std::stoi(data[10]);
 
     return user;
 }
@@ -37,7 +40,7 @@ void pm::dal::db::pullDb(std::vector<pm::type::User>* users)
         std::vector<std::string> data;
      
 
-        for (int i = 0; i < 8; i++) {
+        for (int i = 0; i < 11; i++) {
             data.push_back(line.substr(0, line.find('^')));
             line.erase(0, data[i].length() + 1);
         }
@@ -59,7 +62,7 @@ void pm::dal::db::pullDb(std::vector<pm::type::Team>* teams) {
         std::vector<std::string> data;
 
 
-        for (int i = 0; i < 8; i++) {
+        for (int i = 0; i < 11; i++) {
             data.push_back(line.substr(0, line.find('^')));
             line.erase(0, data[i].length() + 1);
         }
