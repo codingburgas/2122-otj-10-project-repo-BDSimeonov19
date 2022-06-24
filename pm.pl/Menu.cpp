@@ -19,21 +19,8 @@ void pm::pl::loggedUser(pm::bll::UserStore* store) {
 	if (store->loggedInUser.firstName == "")
 		std::cout << "No current logged user\n";
 
-
-	else {
-		std::cout << "Id : " << store->loggedInUser.id << std::endl;
-		std::cout << "Name : " << store->loggedInUser.firstName << " " << store->loggedInUser.lastName << std::endl;
-		std::cout << "Age : " << store->loggedInUser.age << std::endl;
-		std::cout << "Email : " << store->loggedInUser.Email << std::endl;
-
-		//translate time_t into human readable format
-		char buffer[80];
-		struct tm time;
-		const time_t* rawTime = &store->loggedInUser.createdOn;
-		localtime_s(&time, rawTime);
-		strftime(buffer, 80, "%D @ %I:%M%p", &time);
-		std::cout << "Created on : " << buffer << std::endl;
-	}
+	else
+		store->listById(store->loggedInUser.id);
 }
 
 void pm::pl::optionsDisplay(std::string str, bool chosen, int posx, int posy, int maxOptionLength) { // Display avalable options in the current menu

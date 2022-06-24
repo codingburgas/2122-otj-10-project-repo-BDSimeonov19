@@ -5,6 +5,7 @@
 //constructor to pull the database info on start of program
 pm::bll::UserStore::UserStore()
 {
+	users.push_back(admin);
 	dal::db database;
 	database.pullDb(&users);
 	database.pullDb(&teams);
@@ -53,21 +54,26 @@ pm::type::User pm::bll::UserStore::getById(size_t id)
 }
 
 //list all users
-void pm::bll::UserStore::list() {
+void pm::bll::UserStore::listAll() {
+	for (auto i : users)
+		listById(i.id);
+}
+
+//list all users
+void pm::bll::UserStore::listById(size_t id) {
 	char buffer[80];
 	struct tm time;
-	for (auto i : users) {
-		std::cout << "Id : " << i.id << std::endl;
-		std::cout << "Name : " << i.firstName << " " << i.lastName << std::endl;
-		std::cout << "Age : " << i.age << std::endl;
-		std::cout << "Email : " << i.Email << std::endl;
 
-		//translate time_t into human readable format
-		const time_t* rawTime = &i.createdOn;
-		localtime_s(&time, rawTime);
-		strftime(buffer, 80, "%D @ %I:%M%p", &time);
-		std::cout << "Created on : " << buffer << std::endl;
-	}
+	std::cout << "Id : " << users[id].id << std::endl;
+	std::cout << "Name : " << users[id].firstName << " " << users[id].lastName << std::endl;
+	std::cout << "Age : " << users[id].age << std::endl;
+	std::cout << "Email : " << users[id].Email << std::endl;
+
+	//translate time_t into human readable format
+	const time_t* rawTime = &users[id].createdOn;
+	localtime_s(&time, rawTime);
+	strftime(buffer, 80, "%D @ %I:%M%p", &time);
+	std::cout << "Created on : " << buffer << std::endl;
 }
 
 //hash a user's password using sha256

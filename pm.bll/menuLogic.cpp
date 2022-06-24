@@ -14,7 +14,7 @@ void pm::bll::usersMenu(pm::bll::UserStore* store) {
 	switch (pm::pl::Menu(mainMenuOptions, store)) {
 	case 0:
 		system("cls");
-		store->list();
+		store->listAll();
 		system("pause");
 		pm::bll::usersMenu(store);
 		break;
@@ -94,12 +94,15 @@ void pm::bll::mainMenu(pm::bll::UserStore* store)
 	}
 	else {
 		std::vector<std::string> mainMenuOptions = { "Your user",
-													 "Exit" };
+													 "Back" };
 
 		switch (pm::pl::Menu(mainMenuOptions, store)) {
 		case 0:
+			
+			store->listById(store->loggedInUser.id);
 			break;
 		case 1:
+			pm::bll::usersMenu(store);
 			break;
 		}
 	}

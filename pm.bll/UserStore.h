@@ -23,7 +23,8 @@ namespace pm::bll {
 		void remove(size_t);
 		void update(pm::type::User, size_t);
 		pm::type::User getById(size_t);
-		void list();
+		void listById(size_t);
+		void listAll();
 		bool logIn();
 		UserStore();
 	};
