@@ -4,9 +4,6 @@
 
 int main()
 {
-	/*pm::type::User user;
 	pm::bll::UserStore store;
-	store.list();*/
-
-	pm::bll::mainMenu();
+	pm::bll::mainMenu(&store);
 }

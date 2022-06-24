@@ -15,6 +15,27 @@ void pm::pl::gotoxy(int x, int y) //Get the coordinates inside the console
 	SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), coord);
 }
 
+void pm::pl::loggedUser(pm::bll::UserStore* store) {
+	if (store->loggedInUser.firstName == "")
+		std::cout << "No current logged user\n";
+
+
+	else {
+		std::cout << "Id : " << store->loggedInUser.id << std::endl;
+		std::cout << "Name : " << store->loggedInUser.firstName << " " << store->loggedInUser.lastName << std::endl;
+		std::cout << "Age : " << store->loggedInUser.age << std::endl;
+		std::cout << "Email : " << store->loggedInUser.Email << std::endl;
+
+		//translate time_t into human readable format
+		char buffer[80];
+		struct tm time;
+		const time_t* rawTime = &store->loggedInUser.createdOn;
+		localtime_s(&time, rawTime);
+		strftime(buffer, 80, "%D @ %I:%M%p", &time);
+		std::cout << "Created on : " << buffer << std::endl;
+	}
+}
+
 void pm::pl::optionsDisplay(std::string str, bool chosen, int posx, int posy, int maxOptionLength) { // Display avalable options in the current menu
 	//error handler
 	HANDLE hdlOut = GetStdHandle(STD_OUTPUT_HANDLE);
@@ -56,8 +77,11 @@ void pm::pl::optionsDisplay(std::string str, bool chosen, int posx, int posy, in
 	SetConsoleTextAttribute(hdlOut, FOREGROUND_BLUE | FOREGROUND_GREEN | FOREGROUND_RED);
 }
 
-int pm::pl::Menu(std::vector<std::string> options)
+int pm::pl::Menu(std::vector<std::string> options, pm::bll::UserStore* store)
 {
+	
+	pm::pl::loggedUser(store);
+
 	char upInput = 72;
 	char downInput = 80;
 	char key; // Key to be entered

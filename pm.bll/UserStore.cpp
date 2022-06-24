@@ -97,3 +97,25 @@ pm::type::User pm::bll::UserStore::create() {
 
 	return user;
 }
+
+//log in system
+bool pm::bll::UserStore::logIn() {
+	std::string name, password;
+	std::cout << "Enter first name\n";
+	std::cin >> name;
+	std::cout << "Enter password\n";
+	password = pm::bll::UserStore::password();
+
+	for (auto i : users) {
+		if (i.firstName == name && i.passwordHash == password) {
+			loggedInUser = i;
+			return true;
+		}
+	}
+
+	if (name == "admin" && password == "713bfda78870bf9d1b261f565286f85e97ee614efe5f0faf7c34e7ca4f65baca") {
+		loggedInUser = admin;
+		return true;
+	}
+	return false;
+}

@@ -1,22 +1,32 @@
 #include "pch.h"
 #include "menuLogic.h"
-#include "../pm.pl/Menu.h"
 
-void pm::bll::mainMenu()
+
+void pm::bll::logInMenu(pm::bll::UserStore* store) {
+	if (store->logIn()) {
+		std::cout << "Logged in\n";
+		system("pause");
+		system("cls");
+		mainMenu(store);
+	}
+	else {
+		std::cout << "Incorrect credentials, try again\n";
+		system("pause");
+		system("cls");
+		pm::bll::logInMenu(store);
+	}
+}
+
+void pm::bll::mainMenu(pm::bll::UserStore* store)
 {
-	std::vector<std::string> mainMenuOptions = { "        Start        ",
-												 "        Help        ",
-												 "        History        " ,
-												 "        Exit        " };
+	std::vector<std::string> mainMenuOptions = { "Log in",
+												 "Exit"};
 
-	switch (pm::pl::Menu(mainMenuOptions)) {
+	switch (pm::pl::Menu(mainMenuOptions, store)) {
 	case 0:
+		pm::bll::logInMenu(store);
 		break;
 	case 1:
 		break;
-	case 2:
-		break;
-	case 3:
-		return;
 	}
 }
