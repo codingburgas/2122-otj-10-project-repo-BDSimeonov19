@@ -83,19 +83,27 @@ void pm::bll::mainMenu(pm::bll::UserStore* store)
 	}
 	else if (store->loggedInUser.admin == 1) {
 		std::vector<std::string> mainMenuOptions = { "Users",
+													 "Log out",
 													 "Exit" };
+		pm::type::User noUser(0, "", "", "", 0, "", 0, 0, 0, 0, 0);
+
 
 		switch (pm::pl::Menu(mainMenuOptions, store)) {
 		case 0:
 			pm::bll::usersMenu(store);
 			break;
 		case 1:
+			store->loggedInUser = noUser;
+			pm::bll::mainMenu(store);
+			break;
+		case 2:
 			exit(0);
 			break;
 		}
 	}
 	else {
 		std::vector<std::string> mainMenuOptions = { "Your user",
+													 "Log out",
 													 "Back" };
 
 		switch (pm::pl::Menu(mainMenuOptions, store)) {
