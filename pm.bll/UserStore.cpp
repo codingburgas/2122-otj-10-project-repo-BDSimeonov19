@@ -89,6 +89,7 @@ void pm::bll::UserStore::listById(size_t id) {
 	std::cout << "Last change on : " << buffer << std::endl;
 
 	std::cout << "Id of the user that did the last change : " << users[id].idOfChanger << std::endl;
+	std::cout << "Privilege level : " << users[id].admin << std::endl << std::endl;
 }
 
 //hash a user's password using sha256
@@ -106,6 +107,8 @@ std::string pm::bll::UserStore::password() {
 //create a new user
 pm::type::User pm::bll::UserStore::create() {
 	pm::type::User user;
+
+
 	std::cout << "First and last names\n";
 	std::cin >> user.firstName >> user.lastName;
 	std::cout << "Email\n";
@@ -118,7 +121,8 @@ pm::type::User pm::bll::UserStore::create() {
 	user.idOfCreator = loggedInUser.id;
 	user.lastChange = time(NULL);
 	user.idOfChanger = loggedInUser.id;
-	user.admin = false;
+	std::cout << "Enter privilege level\n";
+	std::cin >> user.admin;
 
 	return user;
 }

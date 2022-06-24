@@ -77,6 +77,7 @@ void pm::bll::mainMenu(pm::bll::UserStore* store)
 			pm::bll::logInMenu(store);
 			break;
 		case 1:
+			exit(0);
 			break;
 		}
 	}
@@ -89,6 +90,7 @@ void pm::bll::mainMenu(pm::bll::UserStore* store)
 			pm::bll::usersMenu(store);
 			break;
 		case 1:
+			exit(0);
 			break;
 		}
 	}
