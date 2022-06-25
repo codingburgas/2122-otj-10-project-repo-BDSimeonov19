@@ -9,6 +9,7 @@
 
 namespace pm::bll {
 
-	struct UserStore {
+	struct TeamStore {
+
 	};
 }

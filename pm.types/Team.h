@@ -9,8 +9,9 @@ namespace pm::type {
 	struct Team
 	{
 		size_t id = 0;
-		std::string name;
+		std::string name = "";
 		std::vector<pm::type::User> members;
-		std::time_t createdOn;
+		std::time_t createdOn = 0;
+		size_t idOfCreator = 0;
 	};
 }

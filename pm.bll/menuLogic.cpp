@@ -68,6 +68,8 @@ void pm::bll::logInMenu(pm::bll::UserStore* store) {
 
 void pm::bll::mainMenu(pm::bll::UserStore* store)
 {
+	pm::type::User noUser (0, "", "", "", 0, "", 0, 0, 0, 0, 0);
+
 	if (store->loggedInUser.firstName == "") {
 		std::vector<std::string> mainMenuOptions = { "Log in",
 													 "Exit" };
@@ -85,7 +87,6 @@ void pm::bll::mainMenu(pm::bll::UserStore* store)
 		std::vector<std::string> mainMenuOptions = { "Users",
 													 "Log out",
 													 "Exit" };
-		pm::type::User noUser(0, "", "", "", 0, "", 0, 0, 0, 0, 0);
 
 
 		switch (pm::pl::Menu(mainMenuOptions, store)) {
@@ -112,7 +113,11 @@ void pm::bll::mainMenu(pm::bll::UserStore* store)
 			store->listById(store->loggedInUser.id);
 			break;
 		case 1:
-			pm::bll::usersMenu(store);
+			store->loggedInUser = noUser;
+			pm::bll::mainMenu(store);
+			break;
+		case 2:
+			exit(0);
 			break;
 		}
 	}

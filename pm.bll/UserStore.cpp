@@ -6,7 +6,6 @@
 pm::bll::UserStore::UserStore()
 {
 	users.push_back(admin);
-	dal::db database;
 	database.pullDb(&users);
 	database.pullDb(&teams);
 }
@@ -17,7 +16,6 @@ void pm::bll::UserStore::add(pm::type::User user)
 	user.id += pm::bll::UserStore::getAll().size();
 	pm::bll::UserStore::users.push_back(user);
 
-	pm::dal::db database;
 	database.updateDb(users);
 }
 
@@ -30,27 +28,36 @@ std::vector<pm::type::User> pm::bll::UserStore::getAll()
 //remove a user by id
 void pm::bll::UserStore::remove(size_t id)
 {
-	users.erase(users.begin() + id);
+	if (id == 0)
+		std::cout << "Can not remove admin\n";
+	else if (id == loggedInUser.id)
+		std::cout << "Can not remove logged in user\n";
+	else {
+		users.erase(users.begin() + id);
 
-	pm::dal::db database;
-	database.updateDb(users);
+		database.updateDb(users);
+	}
 }
 
 //update a user by id
 void pm::bll::UserStore::update(pm::type::User user, size_t id)
 {
-	user.id = id;
-	user.createdOn = users[id].createdOn;
-	user.idOfCreator = users[id].idOfCreator;
-	user.lastChange = time(NULL);
-	user.idOfChanger = loggedInUser.id;
+	if (id == 0)
+		std::cout << "Can not change admin\n";
+
+	else {
+		user.id = id;
+		user.createdOn = users[id].createdOn;
+		user.idOfCreator = users[id].idOfCreator;
+		user.lastChange = time(NULL);
+		user.idOfChanger = loggedInUser.id;
 
 
-	users.insert(users.begin() + user.id + 1, user);
-	users.erase(users.begin() + user.id);
+		users.insert(users.begin() + user.id + 1, user);
+		users.erase(users.begin() + user.id);
 
-	pm::dal::db database;
-	database.updateDb(users);
+		database.updateDb(users);
+	}
 }
 
 //get a user by id
