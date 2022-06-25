@@ -10,8 +10,11 @@ namespace pm::type {
 	{
 		size_t id = 0;
 		std::string name = "";
-		std::vector<pm::type::User> members;
+		std::vector<size_t> members;
+
 		std::time_t createdOn = 0;
 		size_t idOfCreator = 0;
+		std::time_t lastChange = 0;
+		size_t idOfChanger = 0;
 	};
 }

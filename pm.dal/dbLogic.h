@@ -11,6 +11,7 @@ namespace pm::dal {
 		pm::type::User saveUser(std::vector<std::string>);
 		pm::type::Team saveTeam(std::vector<std::string>);
 		void updateDb(std::vector<pm::type::User>);
+		void updateDb(std::vector<pm::type::Team>);
 		void pullDb(std::vector<pm::type::User>* users);
 		void pullDb(std::vector<pm::type::Team>* teams);
 	};

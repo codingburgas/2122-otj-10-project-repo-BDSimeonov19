@@ -7,14 +7,13 @@ pm::bll::UserStore::UserStore()
 {
 	users.push_back(admin);
 	database.pullDb(&users);
-	database.pullDb(&teams);
 }
 
 //add a new user to the database
 void pm::bll::UserStore::add(pm::type::User user)
 {
-	user.id += pm::bll::UserStore::getAll().size();
-	pm::bll::UserStore::users.push_back(user);
+	user.id += users.size();
+	users.push_back(user);
 
 	database.updateDb(users);
 }
@@ -32,6 +31,8 @@ void pm::bll::UserStore::remove(size_t id)
 		std::cout << "Can not remove admin\n";
 	else if (id == loggedInUser.id)
 		std::cout << "Can not remove logged in user\n";
+	else if (id + 1 > users.size() || id < 0)
+		std::cout << "Id out of range\n";
 	else {
 		users.erase(users.begin() + id);
 
@@ -63,7 +64,7 @@ void pm::bll::UserStore::update(pm::type::User user, size_t id)
 //get a user by id
 pm::type::User pm::bll::UserStore::getById(size_t id)
 {
-	return users[id + 1];
+	return users[id];
 }
 
 //list all users
@@ -76,6 +77,7 @@ void pm::bll::UserStore::listAll() {
 void pm::bll::UserStore::listById(size_t id) {
 	char buffer[80];
 	struct tm time;
+	const time_t* rawTime;
 
 	std::cout << "Id : " << users[id].id << std::endl;
 	std::cout << "Name : " << users[id].firstName << " " << users[id].lastName << std::endl;
@@ -83,7 +85,7 @@ void pm::bll::UserStore::listById(size_t id) {
 	std::cout << "Email : " << users[id].Email << std::endl;
 
 	//translate time_t into human readable format
-	const time_t* rawTime = &users[id].createdOn;
+	rawTime = &users[id].createdOn;
 	localtime_s(&time, rawTime);
 	strftime(buffer, 80, "%D @ %I:%M%p", &time);
 	std::cout << "Created on : " << buffer << std::endl;

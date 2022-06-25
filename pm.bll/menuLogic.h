@@ -3,10 +3,12 @@
 #include <string>
 #include "../pm.pl/Menu.h"
 #include "../pm.types/User.h"
-#include "UserStore.h"
+#include "TeamStore.h"
 
 namespace pm::bll {
-	void mainMenu(pm::bll::UserStore*);
-	void logInMenu(pm::bll::UserStore*);
-	void usersMenu(pm::bll::UserStore*);
+	void mainMenu(pm::bll::TeamStore*);
+	void logInMenu(pm::bll::TeamStore*);
+	void usersManagmentMenu(pm::bll::TeamStore*);
+	void teamsManagmentMenu(pm::bll::TeamStore*);
+	void assignMembersMenu(pm::bll::TeamStore*, size_t);
 }

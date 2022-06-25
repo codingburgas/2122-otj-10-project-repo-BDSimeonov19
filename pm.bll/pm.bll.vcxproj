@@ -169,6 +169,7 @@
     </ClCompile>
     <ClCompile Include="pm.bll.cpp" />
     <ClCompile Include="sha256.cpp" />
+    <ClCompile Include="TeamStore.cpp" />
     <ClCompile Include="UserStore.cpp" />
   </ItemGroup>
   <ItemGroup>

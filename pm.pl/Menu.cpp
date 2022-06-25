@@ -15,12 +15,12 @@ void pm::pl::gotoxy(int x, int y) //Get the coordinates inside the console
 	SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), coord);
 }
 
-void pm::pl::loggedUser(pm::bll::UserStore* store) {
-	if (store->loggedInUser.firstName == "")
+void pm::pl::loggedUser(pm::bll::TeamStore* store) {
+	if (store->userStore.loggedInUser.firstName == "")
 		std::cout << "No current logged user\n";
 
 	else
-		store->listById(store->loggedInUser.id);
+		store->userStore.listById(store->userStore.loggedInUser.id);
 }
 
 void pm::pl::optionsDisplay(std::string str, bool chosen, int posx, int posy, int maxOptionLength) { // Display avalable options in the current menu
@@ -64,7 +64,7 @@ void pm::pl::optionsDisplay(std::string str, bool chosen, int posx, int posy, in
 	SetConsoleTextAttribute(hdlOut, FOREGROUND_BLUE | FOREGROUND_GREEN | FOREGROUND_RED);
 }
 
-int pm::pl::Menu(std::vector<std::string> options, pm::bll::UserStore* store)
+int pm::pl::Menu(std::vector<std::string> options, pm::bll::TeamStore* store)
 {
 	
 	pm::pl::loggedUser(store);

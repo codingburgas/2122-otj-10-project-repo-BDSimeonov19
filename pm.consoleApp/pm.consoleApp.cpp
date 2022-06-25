@@ -1,9 +1,9 @@
 #include <iostream>
 #include "../pm.bll/menuLogic.h"
-#include "../pm.bll/UserStore.h"
+#include "../pm.bll/TeamStore.h"
 
 int main()
 {
-	pm::bll::UserStore store;
+	pm::bll::TeamStore store;
 	pm::bll::mainMenu(&store);
 }
