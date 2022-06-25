@@ -36,6 +36,9 @@ void pm::bll::UserStore::remove(size_t id)
 	else {
 		users.erase(users.begin() + id);
 
+		for (int i = id; i < users.size(); i++)
+			users[i].id--;
+
 		database.updateDb(users);
 	}
 }

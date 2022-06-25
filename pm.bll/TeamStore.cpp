@@ -43,6 +43,8 @@ void pm::bll::TeamStore::remove(size_t id)
 		std::cout << "Id out of range\n";
 	else {
 		teams.erase(teams.begin() + id);
+		for (int i = id; i < teams.size(); i++)
+			teams[i].id--;
 
 		database.updateDb(teams);
 	}
