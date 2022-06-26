@@ -162,8 +162,10 @@ void pm::bll::logInMenu(pm::bll::TeamStore* store) {
 
 void pm::bll::mainMenu(pm::bll::TeamStore* store)
 {
-	pm::type::User noUser(0, "", "", "", 0, "", 0, 0, 0, 0, 0);
+	//a dummy logged out user
+	pm::type::User noUser;
 
+	//menu for non-logged in users
 	if (store->userStore.loggedInUser.firstName == "") {
 		std::vector<std::string> options = { "Log in",
 													 "Exit" };
@@ -177,6 +179,8 @@ void pm::bll::mainMenu(pm::bll::TeamStore* store)
 			break;
 		}
 	}
+
+	//menu for logged in admin user
 	else if (store->userStore.loggedInUser.admin == 1) {
 		std::vector<std::string> options = { "Users",
 													 "Teams",
@@ -200,9 +204,9 @@ void pm::bll::mainMenu(pm::bll::TeamStore* store)
 			break;
 		}
 	}
+
+	//menu for logged in non-admin user
 	else {
-		bool flag = false;
-		std::vector<size_t> teamsIds;
 		std::vector<std::string> options = { "Your user",
 													 "Your teams",
 													 "Log out",
@@ -210,39 +214,25 @@ void pm::bll::mainMenu(pm::bll::TeamStore* store)
 
 		switch (pm::pl::Menu(options, store)) {
 		case 0:
-
+			//list the user data that matches the logged in user
 			store->listById(store->userStore.loggedInUser.id);
+			system("pause");
 			break;
 		case 1:
-			//find all teams the user is in
-			for (auto i : store->teams){
-				if (std::find(i.members.begin(), i.members.end(), store->userStore.loggedInUser.id) != i.members.end()) {
-					teamsIds.push_back(i.id);
-					flag = true;
-				}
-			}
-
-			//display the teams the user is a part of
-			if (flag) {
-				for (auto i : teamsIds)
-					store->listById(i);
-			}
-			else
-				std::cout << "You are a part of no teams\n";
-			
-
+			//list all teams that the logged in user is a part of
+			store->listByUserId(store->userStore.loggedInUser.id);
 			system("pause");
-			mainMenu(store);
-
 			break;
 		case 2:
 			store->userStore.loggedInUser = noUser;
-			pm::bll::mainMenu(store);
 			break;
 
 		case 3:
 			exit(0);
 			break;
 		}
+
+		//go back to main menu
+		mainMenu(store);
 	}
 }

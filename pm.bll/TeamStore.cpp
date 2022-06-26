@@ -136,3 +136,26 @@ void pm::bll::TeamStore::assign(size_t id, std::vector<size_t> members)
 
 	database.updateDb(teams);
 }
+
+void pm::bll::TeamStore::listByUserId(size_t)
+{
+	bool flag = false;
+	std::vector<size_t> teamsIds;
+
+	//find all teams the user is in
+	for (auto i : teams) {
+		if (std::find(i.members.begin(), i.members.end(), userStore.loggedInUser.id) != i.members.end()) {
+			teamsIds.push_back(i.id);
+			flag = true;
+		}
+	}
+
+	//display the teams the user is a part of
+	if (flag) {
+		for (auto i : teamsIds)
+			listById(i);
+	}
+	else
+		std::cout << "You are a part of no teams\n";
+
+}
