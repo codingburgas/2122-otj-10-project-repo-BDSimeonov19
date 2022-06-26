@@ -2,6 +2,7 @@
 
 #include "../pm.types/User.h"
 #include "../pm.bll/UserStore.h"
+#include "../pm.types/Team.h"
 #include "../pm.dal/dbLogic.h"
 #include <algorithm>
 #include <iostream>
