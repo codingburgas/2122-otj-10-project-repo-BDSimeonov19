@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "menuLogic.h"
 
-void pm::bll::assignMembersMenu(pm::bll::TeamStore* store, size_t id) {
+void pm::bll::assignMembersMenu(TeamStore* store, size_t id) {
 	std::vector<size_t> members;
 	std::vector<std::string> options;
 
@@ -26,7 +26,9 @@ void pm::bll::assignMembersMenu(pm::bll::TeamStore* store, size_t id) {
 	}
 }
 
-void pm::bll::teamsManagmentMenu(pm::bll::TeamStore* store) {
+void pm::bll::teamsManagmentMenu(TeamStore* store) {
+	system("cls");
+
 	size_t id;
 	std::vector<std::string> options = { "List teams",
 										 "Update team",
@@ -35,15 +37,17 @@ void pm::bll::teamsManagmentMenu(pm::bll::TeamStore* store) {
 										 "Assign memebers",
 										 "Back" };
 
-	system("cls");
 	switch (pm::pl::Menu(options, store)) {
+	//list all teams
 	case 0:
 		system("cls");
 		store->listAll();
 
 		system("pause");
-		pm::bll::teamsManagmentMenu(store);
+		teamsManagmentMenu(store);
 		break;
+
+	//update a team by id
 	case 1:
 		system("cls");
 
@@ -52,9 +56,11 @@ void pm::bll::teamsManagmentMenu(pm::bll::TeamStore* store) {
 		store->update(store->create(), id);
 
 		system("pause");
-		pm::bll::teamsManagmentMenu(store);
+		teamsManagmentMenu(store);
 
 		break;
+
+	//remove a team by id
 	case 2:
 		system("cls");
 
@@ -63,16 +69,21 @@ void pm::bll::teamsManagmentMenu(pm::bll::TeamStore* store) {
 		store->remove(id);
 
 		system("pause");
-		pm::bll::teamsManagmentMenu(store);
+		teamsManagmentMenu(store);
 
 		break;
+
+	//add a new team
 	case 3:
 		system("cls");
 		store->add(store->create());
 
 		system("pause");
-		pm::bll::teamsManagmentMenu(store);
+		teamsManagmentMenu(store);
+
 		break;
+
+	//assign memebers to a team
 	case 4:
 		system("cls");
 		std::cout << "Enter id of team\n";
@@ -82,21 +93,25 @@ void pm::bll::teamsManagmentMenu(pm::bll::TeamStore* store) {
 		if (id + 1 > store->teams.size() || id < 0) {
 			std::cout << "Id out of range\n";
 			system("pause");
-			pm::bll::teamsManagmentMenu(store);
+			teamsManagmentMenu(store);
 		}
 
 		else
-			pm::bll::assignMembersMenu(store, id);
+			assignMembersMenu(store, id);
 
 		break;
+
+	//go back
 	case 5:
-		system("cls");
-		pm::bll::mainMenu(store);
+
+		mainMenu(store);
 		break;
 	}
 }
 
-void pm::bll::usersManagmentMenu(pm::bll::TeamStore* store) {
+void pm::bll::usersManagmentMenu(TeamStore* store) {
+	system("cls");
+
 	size_t id;
 	std::vector<std::string> options = { "List users",
 												 "Update user",
@@ -104,14 +119,17 @@ void pm::bll::usersManagmentMenu(pm::bll::TeamStore* store) {
 												 "Create user",
 												 "Back" };
 
-	system("cls");
 	switch (pm::pl::Menu(options, store)) {
+	
+	//list all users
 	case 0:
 		system("cls");
 		store->userStore.listAll();
 		system("pause");
-		pm::bll::usersManagmentMenu(store);
+		usersManagmentMenu(store);
 		break;
+
+	//update user by id
 	case 1:
 		system("cls");
 
@@ -121,48 +139,58 @@ void pm::bll::usersManagmentMenu(pm::bll::TeamStore* store) {
 		store->userStore.update(store->userStore.create(), id);
 
 		system("pause");
-		pm::bll::usersManagmentMenu(store);
+		usersManagmentMenu(store);
+
 		break;
+
+	//remove user by id
 	case 2:
 		system("cls");
 
 		std::cout << "Enter an id\n";
 		std::cin >> id;
 		store->userStore.remove(id);
+
 		system("pause");
-		pm::bll::usersManagmentMenu(store);
+		usersManagmentMenu(store);
+
 		break;
+
+	//add new user
 	case 3:
 		system("cls");
 		store->userStore.add(store->userStore.create());
+
 		system("pause");
-		pm::bll::usersManagmentMenu(store);
+		usersManagmentMenu(store);
+
 		break;
+
+	//go back
 	case 4:
-		system("cls");
-		pm::bll::mainMenu(store);
+		mainMenu(store);
 		break;
 	}
 }
 
-void pm::bll::logInMenu(pm::bll::TeamStore* store) {
+void pm::bll::logInMenu(TeamStore* store) {
 	if (store->userStore.logIn()) {
 		std::cout << "Logged in\n";
 		system("pause");
-		system("cls");
-		pm::bll::mainMenu(store);
+		mainMenu(store);
 	}
+
 	else {
 		std::cout << "Incorrect credentials, try again\n";
 		system("pause");
-		system("cls");
-		pm::bll::logInMenu(store);
+		logInMenu(store);
 	}
 }
 
-void pm::bll::mainMenu(pm::bll::TeamStore* store)
+void pm::bll::mainMenu(TeamStore* store)
 {
-	//a dummy logged out user
+	system("cls");
+	//dummy logged out user
 	pm::type::User noUser;
 
 	//menu for non-logged in users
@@ -172,7 +200,7 @@ void pm::bll::mainMenu(pm::bll::TeamStore* store)
 
 		switch (pm::pl::Menu(options, store)) {
 		case 0:
-			pm::bll::logInMenu(store);
+			logInMenu(store);
 			break;
 		case 1:
 			exit(0);
@@ -190,14 +218,14 @@ void pm::bll::mainMenu(pm::bll::TeamStore* store)
 
 		switch (pm::pl::Menu(options, store)) {
 		case 0:
-			pm::bll::usersManagmentMenu(store);
+			usersManagmentMenu(store);
 			break;
 		case 1:
-			pm::bll::teamsManagmentMenu(store);
+			teamsManagmentMenu(store);
 			break;
 		case 2:
 			store->userStore.loggedInUser = noUser;
-			pm::bll::mainMenu(store);
+			mainMenu(store);
 			break;
 		case 3:
 			exit(0);

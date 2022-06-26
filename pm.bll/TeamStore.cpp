@@ -100,16 +100,14 @@ void pm::bll::TeamStore::listById(size_t id)
 		}
 
 		//translate time_t into human readable format
-		rawTime = &teams[id].createdOn;
-		localtime_s(&time, rawTime);
-		strftime(buffer, 80, "%D @ %I:%M%p", &time);
+		localtime_s(&time, &teams[id].createdOn);
+		strftime(buffer, 80, "%d/%m/%y @ %I:%M%p", &time);
 		std::cout << "Created on : " << buffer << std::endl;
 
 		std::cout << "Id of creator : " << teams[id].idOfCreator << std::endl;
 
-		rawTime = &teams[id].lastChange;
-		localtime_s(&time, rawTime);
-		strftime(buffer, 80, "%D @ %I:%M%p", &time);
+	    localtime_s(&time, &teams[id].lastChange);
+		strftime(buffer, 80, "%d/%m/%y @ %I:%M%p", &time);
 		std::cout << "Last change on : " << buffer << std::endl;
 
 		std::cout << "Id of the user that did the last change : " << teams[id].idOfChanger << std::endl << std::endl;

@@ -88,16 +88,14 @@ void pm::bll::UserStore::listById(size_t id) {
 	std::cout << "Email : " << users[id].Email << std::endl;
 
 	//translate time_t into human readable format
-	rawTime = &users[id].createdOn;
-	localtime_s(&time, rawTime);
-	strftime(buffer, 80, "%D @ %I:%M%p", &time);
+	localtime_s(&time, &users[id].createdOn);
+	strftime(buffer, 80, "%d/%m/%y @ %I:%M%p", &time);
 	std::cout << "Created on : " << buffer << std::endl;
 
 	std::cout << "Id of creator : " << users[id].idOfCreator << std::endl;
 	
-	rawTime = &users[id].lastChange;
-	localtime_s(&time, rawTime);
-	strftime(buffer, 80, "%D @ %I:%M%p", &time);
+	localtime_s(&time, &users[id].lastChange);
+	strftime(buffer, 80, "%d/%m/%y @ %I:%M%p", &time);
 	std::cout << "Last change on : " << buffer << std::endl;
 
 	std::cout << "Id of the user that did the last change : " << users[id].idOfChanger << std::endl;
