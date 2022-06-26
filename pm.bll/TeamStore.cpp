@@ -2,12 +2,14 @@
 #include "TeamStore.h"
 
 
+//constructor to pull the database info on start of program
 pm::bll::TeamStore::TeamStore()
 {
     database.pullDb(&teams);
 }
 
 
+//create a new team
 pm::type::Team pm::bll::TeamStore::create()
 {
 	pm::type::Team team;
@@ -24,6 +26,8 @@ pm::type::Team pm::bll::TeamStore::create()
 	return team;
 }
 
+
+//add a new team to the database
 void pm::bll::TeamStore::add(pm::type::Team team)
 {
 	team.id += teams.size();
@@ -32,11 +36,13 @@ void pm::bll::TeamStore::add(pm::type::Team team)
 	database.updateDb(teams);
 }
 
+//return all teams
 std::vector<pm::type::Team> pm::bll::TeamStore::getAll()
 {
     return teams;
 }
 
+//remove a team by id
 void pm::bll::TeamStore::remove(size_t id)
 {
 	if (id + 1> teams.size() || id < 0)
@@ -50,6 +56,7 @@ void pm::bll::TeamStore::remove(size_t id)
 	}
 }
 
+//update a team by id
 void pm::bll::TeamStore::update(pm::type::Team team, size_t id)
 {
 	if (id + 1 > teams.size() || id < 0)
@@ -69,11 +76,13 @@ void pm::bll::TeamStore::update(pm::type::Team team, size_t id)
 	}
 }
 
+//get a team by id
 pm::type::Team pm::bll::TeamStore::getById(size_t id)
 {
 	return teams[id];
 }
 
+//list team by id
 void pm::bll::TeamStore::listById(size_t id)
 {
 	if (id + 1 > teams.size() || id < 0)
@@ -115,12 +124,14 @@ void pm::bll::TeamStore::listById(size_t id)
 	}
 }
 
+//list all teams
 void pm::bll::TeamStore::listAll()
 {
 	for (auto i : teams)
 		listById(i.id);
 }
 
+//assign users to a team
 void pm::bll::TeamStore::assign(size_t id, std::vector<size_t> members)
 {
 	
@@ -135,7 +146,9 @@ void pm::bll::TeamStore::assign(size_t id, std::vector<size_t> members)
 	database.updateDb(teams);
 }
 
-void pm::bll::TeamStore::listByUserId(size_t)
+
+//list all teams that contain a user id
+void pm::bll::TeamStore::listByUserId()
 {
 	bool flag = false;
 	std::vector<size_t> teamsIds;

@@ -1,11 +1,13 @@
 #include "pch.h"
 #include "ProjectStore.h"
 
+//constructor to pull the database info on start of program
 pm::bll::ProjectStore::ProjectStore()
 {
 	//database.pullDb(&projects);
 }
 
+//create a new project
 pm::type::Project pm::bll::ProjectStore::create()
 {
 	pm::type::Project project;
@@ -24,6 +26,7 @@ pm::type::Project pm::bll::ProjectStore::create()
 	return project;
 }
 
+//add a new project to the database
 void pm::bll::ProjectStore::add(pm::type::Project project)
 {
 	project.id += projects.size();
@@ -32,11 +35,13 @@ void pm::bll::ProjectStore::add(pm::type::Project project)
 	//database.updateDb(projects);
 }
 
+//return all projects
 std::vector<pm::type::Project> pm::bll::ProjectStore::getAll()
 {
 	return projects;
 }
 
+//remove a project by id
 void pm::bll::ProjectStore::remove(size_t id)
 {
 	if (id + 1 > projects.size() || id < 0)
@@ -50,6 +55,7 @@ void pm::bll::ProjectStore::remove(size_t id)
 	}
 }
 
+//update a project by id
 void pm::bll::ProjectStore::update(pm::type::Project project, size_t id)
 {
 	if (id + 1 > projects.size() || id < 0)
@@ -69,11 +75,13 @@ void pm::bll::ProjectStore::update(pm::type::Project project, size_t id)
 	}
 }
 
+//get a project by id
 pm::type::Project pm::bll::ProjectStore::getById(size_t id)
 {
 	return projects[id];
 }
 
+//list project by id
 void pm::bll::ProjectStore::listById(size_t id)
 {
 	if (id + 1 > projects.size() || id < 0)
@@ -116,12 +124,14 @@ void pm::bll::ProjectStore::listById(size_t id)
 	}
 }
 
+//list all bprojects
 void pm::bll::ProjectStore::listAll()
 {
 	for (auto i : projects)
 		listById(i.id);
 }
 
+//assign teams to a project
 void pm::bll::ProjectStore::assign(size_t id, std::vector<size_t> members)
 {
 	std::sort(members.begin(), members.end());
@@ -135,6 +145,7 @@ void pm::bll::ProjectStore::assign(size_t id, std::vector<size_t> members)
 	//database.updateDb(projects);
 }
 
+//list all projects that contain a team id
 void pm::bll::ProjectStore::listByTeamId(size_t id)
 {
 	bool flag = false;

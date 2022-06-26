@@ -248,7 +248,7 @@ void pm::bll::mainMenu(TeamStore* store)
 			break;
 		case 1:
 			//list all teams that the logged in user is a part of
-			store->listByUserId(store->userStore.loggedInUser.id);
+			store->listByUserId();
 			system("pause");
 			break;
 		case 2:

@@ -9,6 +9,29 @@ pm::bll::UserStore::UserStore()
 	database.pullDb(&users);
 }
 
+//create a new user
+pm::type::User pm::bll::UserStore::create() {
+	pm::type::User user;
+
+
+	std::cout << "First and last names\n";
+	std::cin >> user.firstName >> user.lastName;
+	std::cout << "Email\n";
+	std::cin >> user.Email;
+	std::cout << "Age\n";
+	std::cin >> user.age;
+	std::cout << "Enter password\n";
+	user.passwordHash = password();
+	user.createdOn = time(NULL);
+	user.idOfCreator = loggedInUser.id;
+	user.lastChange = time(NULL);
+	user.idOfChanger = loggedInUser.id;
+	std::cout << "Enter privilege level\n";
+	std::cin >> user.admin;
+
+	return user;
+}
+
 //add a new user to the database
 void pm::bll::UserStore::add(pm::type::User user)
 {
@@ -70,13 +93,7 @@ pm::type::User pm::bll::UserStore::getById(size_t id)
 	return users[id];
 }
 
-//list all users
-void pm::bll::UserStore::listAll() {
-	for (auto i : users)
-		listById(i.id);
-}
-
-//list all users
+//list user by id
 void pm::bll::UserStore::listById(size_t id) {
 	char buffer[80];
 	struct tm time;
@@ -102,6 +119,14 @@ void pm::bll::UserStore::listById(size_t id) {
 	std::cout << "Privilege level : " << users[id].admin << std::endl << std::endl;
 }
 
+
+//list all users
+void pm::bll::UserStore::listAll() {
+	for (auto i : users)
+		listById(i.id);
+}
+
+
 //hash a user's password using sha256
 std::string pm::bll::UserStore::password() {
 	char ch;
@@ -114,28 +139,7 @@ std::string pm::bll::UserStore::password() {
 	return sha256(pass);
 }
 
-//create a new user
-pm::type::User pm::bll::UserStore::create() {
-	pm::type::User user;
 
-
-	std::cout << "First and last names\n";
-	std::cin >> user.firstName >> user.lastName;
-	std::cout << "Email\n";
-	std::cin >> user.Email;
-	std::cout << "Age\n";
-	std::cin >> user.age;
-	std::cout << "Enter password\n";
-	user.passwordHash = password();
-	user.createdOn = time(NULL);
-	user.idOfCreator = loggedInUser.id;
-	user.lastChange = time(NULL);
-	user.idOfChanger = loggedInUser.id;
-	std::cout << "Enter privilege level\n";
-	std::cin >> user.admin;
-
-	return user;
-}
 
 //log in system
 bool pm::bll::UserStore::logIn() {

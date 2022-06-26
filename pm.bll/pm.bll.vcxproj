@@ -155,6 +155,7 @@
   <ItemGroup>
     <ClInclude Include="menuLogic.h" />
     <ClInclude Include="pch.h" />
+    <ClInclude Include="ProjectStore.h" />
     <ClInclude Include="sha256.h" />
     <ClInclude Include="TeamStore.h" />
     <ClInclude Include="UserStore.h" />
@@ -168,6 +169,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="pm.bll.cpp" />
+    <ClCompile Include="ProjectStore.cpp" />
     <ClCompile Include="sha256.cpp" />
     <ClCompile Include="TeamStore.cpp" />
     <ClCompile Include="UserStore.cpp" />
