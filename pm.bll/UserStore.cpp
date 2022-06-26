@@ -2,11 +2,15 @@
 #include "UserStore.h"
 #include "sha256.h"
 
+std::vector<pm::type::User> pm::bll::UserStore::users = {};
+pm::type::User pm::bll::UserStore::loggedInUser = {};
+
 //constructor to pull the database info on start of program
 pm::bll::UserStore::UserStore()
 {
 	users.push_back(admin);
 	database.pullDb(&users);
+
 }
 
 //create a new user
@@ -71,7 +75,8 @@ void pm::bll::UserStore::update(pm::type::User user, size_t id)
 {
 	if (id == 0)
 		std::cout << "Can not change admin\n";
-
+	else if (id + 1 > users.size() || id < 0)
+		std::cout << "Id out of range\n";
 	else {
 		user.id = id;
 		user.createdOn = users[id].createdOn;
@@ -161,4 +166,9 @@ bool pm::bll::UserStore::logIn() {
 		return true;
 	}
 	return false;
+}
+
+pm::type::User pm::bll::UserStore::getLoggedUser()
+{
+	return loggedInUser;
 }

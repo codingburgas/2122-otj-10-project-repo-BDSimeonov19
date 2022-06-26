@@ -1,5 +1,5 @@
 #pragma once
-
+/*
 #include "../pm.types/Project.h"
 #include "../pm.bll/TeamStore.h"
 #include "../pm.dal/dbLogic.h"
@@ -29,4 +29,4 @@ namespace pm::bll {
 		void assign(size_t, std::vector<size_t>);
 		void listByTeamId(size_t);
 	};
-}
+}*/

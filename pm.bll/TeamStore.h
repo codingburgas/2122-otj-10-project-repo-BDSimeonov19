@@ -17,7 +17,6 @@ namespace pm::bll {
 
 		pm::dal::db database;
 		std::vector<pm::type::Team> teams;
-		pm::bll::UserStore userStore;
 
 		pm::type::Team create();
 		void add(pm::type::Team);
@@ -29,5 +28,6 @@ namespace pm::bll {
 		void listAll();
 		void assign(size_t, std::vector<size_t>);
 		void listByUserId();
+		void removeFromTeam(size_t);
 	};
 }

@@ -19,9 +19,9 @@ pm::type::Team pm::bll::TeamStore::create()
 	std::cin >> team.name;
 
 	team.createdOn = time(NULL);
-	team.idOfCreator = userStore.loggedInUser.id;
+	team.idOfCreator = UserStore::getLoggedUser().id;
 	team.lastChange = time(NULL);
-	team.idOfChanger = userStore.loggedInUser.id;
+	team.idOfChanger = UserStore::getLoggedUser().id;
 
 	return team;
 }
@@ -66,7 +66,7 @@ void pm::bll::TeamStore::update(pm::type::Team team, size_t id)
 		team.createdOn = teams[id].createdOn;
 		team.idOfCreator = teams[id].idOfCreator;
 		team.lastChange = time(NULL);
-		team.idOfChanger = userStore.loggedInUser.id;
+		team.idOfChanger = UserStore::getLoggedUser().id;
 
 
 		teams.insert(teams.begin() + team.id + 1, team);
@@ -103,9 +103,9 @@ void pm::bll::TeamStore::listById(size_t id)
 		}
 		else {
 			for (auto i = teams[id].members.begin(); i < teams[id].members.end() - 1; i++)
-				std::cout << userStore.getById(*i).firstName << " " << userStore.getById(*i).lastName << ", ";
-			std::cout << userStore.getById(teams[id].members[teams[id].members.size() - 1]).firstName << " ";
-			std::cout << userStore.getById(teams[id].members[teams[id].members.size() - 1]).lastName << std::endl;
+				std::cout << UserStore::getById(*i).firstName << " " << UserStore::getById(*i).lastName << ", ";
+			std::cout << UserStore::getById(teams[id].members[teams[id].members.size() - 1]).firstName << " ";
+			std::cout << UserStore::getById(teams[id].members[teams[id].members.size() - 1]).lastName << std::endl;
 		}
 
 		//translate time_t into human readable format
@@ -155,7 +155,7 @@ void pm::bll::TeamStore::listByUserId()
 
 	//find all teams the user is in
 	for (auto i : teams) {
-		if (std::find(i.members.begin(), i.members.end(), userStore.loggedInUser.id) != i.members.end()) {
+		if (std::find(i.members.begin(), i.members.end(), UserStore::loggedInUser.id) != i.members.end()) {
 			teamsIds.push_back(i.id);
 			flag = true;
 		}
@@ -169,4 +169,19 @@ void pm::bll::TeamStore::listByUserId()
 	else
 		std::cout << "You are a part of no teams\n";
 
+}
+
+//remove a user from all teams by id
+void pm::bll::TeamStore::removeFromTeam(size_t id)
+{
+	for (auto &i : teams) {
+		for (auto j = i.members.begin(); j < i.members.end(); j++) {
+			if (*j == id) {
+				i.members.erase(j);
+				break;
+			}
+		}
+	}
+
+	database.updateDb(teams);
 }

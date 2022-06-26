@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "ProjectStore.h"
 
-//constructor to pull the database info on start of program
+/*//constructor to pull the database info on start of program
 pm::bll::ProjectStore::ProjectStore()
 {
 	//database.pullDb(&projects);
@@ -169,3 +169,4 @@ void pm::bll::ProjectStore::listByTeamId(size_t id)
 	else
 		std::cout << "You are a part of no projects\n";
 }
+*/

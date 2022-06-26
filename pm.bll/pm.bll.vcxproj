@@ -155,6 +155,7 @@
   <ItemGroup>
     <ClInclude Include="menuLogic.h" />
     <ClInclude Include="pch.h" />
+    <ClInclude Include="ProjectManager.h" />
     <ClInclude Include="ProjectStore.h" />
     <ClInclude Include="sha256.h" />
     <ClInclude Include="TeamStore.h" />
