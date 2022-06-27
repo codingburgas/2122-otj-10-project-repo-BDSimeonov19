@@ -8,8 +8,9 @@
 namespace pm::bll {
 	void mainMenu(pm::bll::ProjectManager*);
 	void logInMenu(pm::bll::ProjectManager*);
-	void projectsManagmentMenu(pm::bll::ProjectManager*);
 	void usersManagmentMenu(pm::bll::ProjectManager*);
 	void teamsManagmentMenu(pm::bll::ProjectManager*);
+	void projectsManagmentMenu(pm::bll::ProjectManager*);
 	void assignUsersMenu(pm::bll::ProjectManager*, size_t);
+	void assignTeamsMenu(pm::bll::ProjectManager*, size_t);
 }

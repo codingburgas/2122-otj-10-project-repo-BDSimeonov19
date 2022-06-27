@@ -148,8 +148,8 @@ void pm::bll::TeamStore::assign(size_t id, std::vector<size_t> members)
 }
 
 
-//list all teams that contain a user id
-void pm::bll::TeamStore::listByUserId()
+//return all teams that contain a user id
+std::vector<size_t> pm::bll::TeamStore::TeamsWithUser()
 {
 	bool flag = false;
 	std::vector<size_t> teamsIds;
@@ -163,13 +163,17 @@ void pm::bll::TeamStore::listByUserId()
 	}
 
 	//display the teams the user is a part of
-	if (flag) {
-		for (auto i : teamsIds)
-			listById(i);
-	}
-	else
+	if (!flag)
 		std::cout << "You are a part of no teams\n";
 
+
+	return teamsIds;
+}
+
+//list teams from a vector
+void pm::bll::TeamStore::listByIds(std::vector<size_t> ids) {
+	for (auto i : ids)
+		listById(i);
 }
 
 //remove a user from all teams by id

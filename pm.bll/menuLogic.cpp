@@ -1,6 +1,31 @@
 #include "pch.h"
 #include "menuLogic.h"
 
+void pm::bll::assignTeamsMenu(ProjectManager* manager, size_t id) {
+	std::vector<size_t> members;
+	std::vector<std::string> options;
+
+	//make all users options
+	for (auto i : manager->tstore.teams)
+		options.push_back(std::to_string(i.id) + " " + i.name);
+	options.push_back("Done");
+
+	while (true) {
+		int choice = pm::pl::Menu(options, manager);
+
+		//if done is selected, assign the chosen members
+		if (choice == options.size() - 1) {
+			manager->pstore.assign(id, members);
+			projectsManagmentMenu(manager);
+		}
+
+		//if a user is selected, add them to a list and remove them from options
+		members.push_back(int(options[choice][0] - '0'));
+		options.erase(options.begin() + choice);
+
+	}
+}
+
 void pm::bll::projectsManagmentMenu(ProjectManager* manager) {
 	system("cls");
 
@@ -72,7 +97,7 @@ void pm::bll::projectsManagmentMenu(ProjectManager* manager) {
 		}
 
 		else
-			//assignTeamsMenu(manager, id);
+			assignTeamsMenu(manager, id);
 
 		break;
 
@@ -326,6 +351,7 @@ void pm::bll::mainMenu(ProjectManager* manager)
 	else {
 		std::vector<std::string> options = { "Your user",
 													 "Your teams",
+													 "Your projects",
 													 "Log out",
 													 "Back" };
 
@@ -337,14 +363,19 @@ void pm::bll::mainMenu(ProjectManager* manager)
 			break;
 		case 1:
 			//list all teams that the logged in user is a part of
-			manager->tstore.listByUserId();
+			manager->tstore.listByIds(manager->tstore.TeamsWithUser());
 			system("pause");
 			break;
 		case 2:
+			//list all projects that the logged in user is a part of
+			manager->pstore.listProjectsWithUser();
+			system("pause");
+			break;
+		case 3:
 			manager->ustore.loggedInUser = noUser;
 			break;
 
-		case 3:
+		case 4:
 			exit(0);
 			break;
 		}

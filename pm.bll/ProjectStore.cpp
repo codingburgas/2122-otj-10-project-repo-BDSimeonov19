@@ -105,7 +105,7 @@ void pm::bll::ProjectStore::listById(size_t id)
 		}
 		else {
 			for (auto i = projects[id].members.begin(); i < projects[id].members.end() - 1; i++)
-				std::cout << TeamStore::getById(*i).name;
+				std::cout << TeamStore::getById(*i).name << " ";
 			std::cout << TeamStore::getById(projects[id].members[projects[id].members.size() - 1]).name << std::endl;
 		}
 
@@ -147,16 +147,20 @@ void pm::bll::ProjectStore::assign(size_t id, std::vector<size_t> members)
 }
 
 //list all projects that contain a team id
-void pm::bll::ProjectStore::listByTeamId(size_t id)
+void pm::bll::ProjectStore::listProjectsWithUser()
 {
+
+
 	bool flag = false;
 	std::vector<size_t> projectsIds;
 
-	//find all projects the team is in
-	for (auto i : projects) {
-		if (std::find(i.members.begin(), i.members.end(), id) != i.members.end()) {
-			projectsIds.push_back(i.id);
-			flag = true;
+	for (auto k : TeamStore::TeamsWithUser()) {
+		//find all projects the team is in
+		for (auto i : projects) {
+			if (std::find(i.members.begin(), i.members.end(), k) != i.members.end()) {
+				projectsIds.push_back(i.id);
+				flag = true;
+			}
 		}
 	}
 

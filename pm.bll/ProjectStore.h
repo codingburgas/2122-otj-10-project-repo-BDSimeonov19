@@ -26,6 +26,6 @@ namespace pm::bll {
 		void listById(size_t);
 		void listAll();
 		void assign(size_t, std::vector<size_t>);
-		void listByTeamId(size_t);
+		void listProjectsWithUser();
 	};
 }
