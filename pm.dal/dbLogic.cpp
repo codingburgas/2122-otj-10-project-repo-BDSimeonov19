@@ -47,51 +47,6 @@ pm::type::Team pm::dal::db::saveTeam(std::vector<std::string> data) {
     return team;
 }
 
-/*//pulls the user database and stores the data
-void pm::dal::db::pullDb(std::vector<pm::type::User>* users)
-{
-    pm::dal::db database;
-    std::string line;
-
-
-    database.db.open("users.txt", std::ios::in);
-    
-    while (std::getline(database.db, line)) {
-        pm::type::User temp;
-        std::vector<std::string> data;
-     
-
-        for (int i = 0; i < 11; i++) {
-            data.push_back(line.substr(0, line.find('^')));
-            line.erase(0, data[i].length() + 1);
-        }
-
-        users->push_back(saveUser(data));
-    }
-}
-
-
-//pulls the team database and stores the data
-void pm::dal::db::pullDb(std::vector<pm::type::Team>* teams) {
-    pm::dal::db database;
-    std::string line;
-
-
-    database.db.open("teams.txt", std::ios::in);
-
-    while (std::getline(database.db, line)) {
-        pm::type::Team temp;
-        std::vector<std::string> data;
-
-
-        for (int i = 0; i < 7; i++) {
-            data.push_back(line.substr(0, line.find('^')));
-            line.erase(0, data[i].length() + 1);
-        }
-
-        teams->push_back(saveTeam(data));
-    }
-}*/
 
 //updates the user database
 void pm::dal::db::updateDb(std::vector<pm::type::User> users)
