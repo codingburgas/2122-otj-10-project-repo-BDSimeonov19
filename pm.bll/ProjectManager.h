@@ -5,7 +5,7 @@
 
 namespace pm::bll{
 	struct ProjectManager {
-		//ProjectStore pstore;
+		ProjectStore pstore;
 		TeamStore tstore;
 		UserStore ustore;
 	};

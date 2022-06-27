@@ -1,8 +1,8 @@
 #pragma once
-/*
+
 #include "../pm.types/Project.h"
-#include "../pm.bll/TeamStore.h"
 #include "../pm.dal/dbLogic.h"
+#include "TeamStore.h"
 #include <iostream>
 #include <algorithm>
 #include <conio.h>
@@ -16,7 +16,6 @@ namespace pm::bll {
 
 		pm::dal::db database;
 		std::vector<pm::type::Project> projects;
-		pm::bll::TeamStore teamStore;
 
 		pm::type::Project create();
 		void add(pm::type::Project);
@@ -29,4 +28,4 @@ namespace pm::bll {
 		void assign(size_t, std::vector<size_t>);
 		void listByTeamId(size_t);
 	};
-}*/
+}

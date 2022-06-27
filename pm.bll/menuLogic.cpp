@@ -1,7 +1,90 @@
 #include "pch.h"
 #include "menuLogic.h"
 
-void pm::bll::assignMembersMenu(ProjectManager* manager, size_t id) {
+void pm::bll::projectsManagmentMenu(ProjectManager* manager) {
+	system("cls");
+
+	size_t id;
+	std::vector<std::string> options = { "List projects",
+										 "Update project",
+										 "Remove project",
+										 "Create project",
+										 "Assign memebers",
+										 "Back" };
+
+	switch (pm::pl::Menu(options, manager)) {
+		//list all projects
+	case 0:
+		system("cls");
+		manager->pstore.listAll();
+
+		system("pause");
+		projectsManagmentMenu(manager);
+		break;
+
+		//update a projects by id
+	case 1:
+		system("cls");
+
+		std::cout << "Enter id of project\n";
+		std::cin >> id;
+		manager->pstore.update(manager->pstore.create(), id);
+
+		system("pause");
+		projectsManagmentMenu(manager);
+
+		break;
+
+		//remove a projects by id
+	case 2:
+		system("cls");
+
+		std::cout << "Enter id of project\n";
+		std::cin >> id;
+		manager->pstore.remove(id);
+
+		system("pause");
+		projectsManagmentMenu(manager);
+
+		break;
+
+		//add a new projects
+	case 3:
+		system("cls");
+		manager->pstore.add(manager->pstore.create());
+
+		system("pause");
+		projectsManagmentMenu(manager);
+
+		break;
+
+		//assign teams to a projects
+	case 4:
+		system("cls");
+		std::cout << "Enter id of project\n";
+		std::cin >> id;
+		system("cls");
+
+		if (id + 1 > manager->pstore.projects.size() || id < 0) {
+			std::cout << "Id out of range\n";
+			system("pause");
+			projectsManagmentMenu(manager);
+		}
+
+		else
+			//assignTeamsMenu(manager, id);
+
+		break;
+
+		//go back
+	case 5:
+
+		mainMenu(manager);
+		break;
+	}
+}
+
+void pm::bll::assignUsersMenu(ProjectManager* manager, size_t id) {
 	std::vector<size_t> members;
 	std::vector<std::string> options;
 
@@ -97,7 +180,7 @@ void pm::bll::teamsManagmentMenu(ProjectManager* manager) {
 		}
 
 		else
-			assignMembersMenu(manager, id);
+			assignUsersMenu(manager, id);
 
 		break;
 
@@ -214,6 +297,7 @@ void pm::bll::mainMenu(ProjectManager* manager)
 	else if (manager->ustore.loggedInUser.admin == 1) {
 		std::vector<std::string> options = { "Users",
 													 "Teams",
+													 "Projects",
 													 "Log out",
 													 "Exit" };
 
@@ -226,10 +310,13 @@ void pm::bll::mainMenu(ProjectManager* manager)
 			teamsManagmentMenu(manager);
 			break;
 		case 2:
+			projectsManagmentMenu(manager);
+			break;
+		case 3:
 			manager->ustore.loggedInUser = noUser;
 			mainMenu(manager);
 			break;
-		case 3:
+		case 4:
 			exit(0);
 			break;
 		}

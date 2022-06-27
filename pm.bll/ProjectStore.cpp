@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "ProjectStore.h"
 
-/*//constructor to pull the database info on start of program
+//constructor to pull the database info on start of program
 pm::bll::ProjectStore::ProjectStore()
 {
 	//database.pullDb(&projects);
@@ -16,12 +16,13 @@ pm::type::Project pm::bll::ProjectStore::create()
 	std::cout << "Project name\n";
 	std::cin >> project.name;
 	std::cout << "Project description\n";
-	std::cin >> project.description;
+	std::cin.ignore();
+	std::getline(std::cin, project.description, '\n');
 
 	project.createdOn = time(NULL);
-	project.idOfCreator = teamStore.userStore.loggedInUser.id;
+	project.idOfCreator = UserStore::loggedInUser.id;
 	project.lastChange = time(NULL);
-	project.idOfChanger = teamStore.userStore.loggedInUser.id;
+	project.idOfChanger = UserStore::loggedInUser.id;
 
 	return project;
 }
@@ -65,7 +66,7 @@ void pm::bll::ProjectStore::update(pm::type::Project project, size_t id)
 		project.createdOn = projects[id].createdOn;
 		project.idOfCreator = projects[id].idOfCreator;
 		project.lastChange = time(NULL);
-		project.idOfChanger = teamStore.userStore.loggedInUser.id;
+		project.idOfChanger = UserStore::loggedInUser.id;
 
 
 		projects.insert(projects.begin() + project.id + 1, project);
@@ -104,8 +105,8 @@ void pm::bll::ProjectStore::listById(size_t id)
 		}
 		else {
 			for (auto i = projects[id].members.begin(); i < projects[id].members.end() - 1; i++)
-				std::cout << teamStore.getById(*i).name;
-			std::cout << teamStore.getById(projects[id].members[projects[id].members.size() - 1]).name << std::endl;
+				std::cout << TeamStore::getById(*i).name;
+			std::cout << TeamStore::getById(projects[id].members[projects[id].members.size() - 1]).name << std::endl;
 		}
 
 		//translate time_t into human readable format
@@ -169,4 +170,3 @@ void pm::bll::ProjectStore::listByTeamId(size_t id)
 	else
 		std::cout << "You are a part of no projects\n";
 }
-*/

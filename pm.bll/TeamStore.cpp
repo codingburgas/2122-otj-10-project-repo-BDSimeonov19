@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "TeamStore.h"
 
+std::vector<pm::type::Team> pm::bll::TeamStore::teams = {};
 
 //constructor to pull the database info on start of program
 pm::bll::TeamStore::TeamStore()

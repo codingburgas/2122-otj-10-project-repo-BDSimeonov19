@@ -16,14 +16,14 @@ namespace pm::bll {
 		TeamStore();
 
 		pm::dal::db database;
-		std::vector<pm::type::Team> teams;
+		static std::vector<pm::type::Team> teams;
 
 		pm::type::Team create();
 		void add(pm::type::Team);
 		std::vector<pm::type::Team> getAll();
 		void remove(size_t);
 		void update(pm::type::Team, size_t);
-		pm::type::Team getById(size_t);
+		static pm::type::Team getById(size_t);
 		void listById(size_t);
 		void listAll();
 		void assign(size_t, std::vector<size_t>);
