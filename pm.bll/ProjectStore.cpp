@@ -4,7 +4,7 @@
 //constructor to pull the database info on start of program
 pm::bll::ProjectStore::ProjectStore()
 {
-	//database.pullDb(&projects);
+	database.pullDb<pm::type::Project>(&projects, "projects.txt", 8, &pm::dal::db::saveProject);
 }
 
 //create a new project
@@ -33,7 +33,7 @@ void pm::bll::ProjectStore::add(pm::type::Project project)
 	project.id += projects.size();
 	projects.push_back(project);
 
-	//database.updateDb(projects);
+	database.updateDb(projects);
 }
 
 //return all projects
@@ -52,7 +52,7 @@ void pm::bll::ProjectStore::remove(size_t id)
 		for (int i = id; i < projects.size(); i++)
 			projects[i].id--;
 
-		//database.updateDb(projects);
+		database.updateDb(projects);
 	}
 }
 
@@ -72,7 +72,7 @@ void pm::bll::ProjectStore::update(pm::type::Project project, size_t id)
 		projects.insert(projects.begin() + project.id + 1, project);
 		projects.erase(projects.begin() + project.id);
 
-		//database.updateDb(projects);
+		database.updateDb(projects);
 	}
 }
 
@@ -143,7 +143,7 @@ void pm::bll::ProjectStore::assign(size_t id, std::vector<size_t> members)
 		projects[id].members.push_back(i);
 
 
-	//database.updateDb(projects);
+	database.updateDb(projects);
 }
 
 //list all projects that contain a team id

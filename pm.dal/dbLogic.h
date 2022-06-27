@@ -1,6 +1,7 @@
 #pragma once
 #include "../pm.types/User.h"
 #include "../pm.types/Team.h"
+#include "../pm.types/Project.h"
 #include <vector>
 #include <fstream>
 #include <iostream>
@@ -10,10 +11,10 @@ namespace pm::dal {
 		std::fstream db;
 		static pm::type::User saveUser(std::vector<std::string>);
 		static pm::type::Team saveTeam(std::vector<std::string>);
+		static pm::type::Project saveProject(std::vector<std::string>);
 		void updateDb(std::vector<pm::type::User>);
 		void updateDb(std::vector<pm::type::Team>);
-		/*void pullDb(std::vector<pm::type::User>* users);
-		void pullDb(std::vector<pm::type::Team>* teams);*/
+		void updateDb(std::vector<pm::type::Project>);
 
 		template <typename T> void pullDb(std::vector<T>* t, std::string filename, int members, T(*func)(std::vector<std::string>)) {
 			pm::dal::db database;
