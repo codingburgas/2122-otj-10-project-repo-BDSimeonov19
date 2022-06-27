@@ -5,6 +5,7 @@
 std::vector<pm::type::User> pm::bll::UserStore::users = {};
 pm::type::User pm::bll::UserStore::loggedInUser = {};
 
+
 //constructor to pull the database info on start of program
 pm::bll::UserStore::UserStore()
 {
