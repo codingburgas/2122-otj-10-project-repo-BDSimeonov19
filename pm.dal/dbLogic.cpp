@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "dbLogic.h"
 
+
 //saves the passed data to a User
 pm::type::User pm::dal::db::saveUser(std::vector<std::string> data) {
     pm::type::User user;
@@ -46,7 +47,7 @@ pm::type::Team pm::dal::db::saveTeam(std::vector<std::string> data) {
     return team;
 }
 
-//pulls the user database and stores the data
+/*//pulls the user database and stores the data
 void pm::dal::db::pullDb(std::vector<pm::type::User>* users)
 {
     pm::dal::db database;
@@ -90,7 +91,7 @@ void pm::dal::db::pullDb(std::vector<pm::type::Team>* teams) {
 
         teams->push_back(saveTeam(data));
     }
-}
+}*/
 
 //updates the user database
 void pm::dal::db::updateDb(std::vector<pm::type::User> users)

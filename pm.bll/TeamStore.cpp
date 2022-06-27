@@ -6,7 +6,7 @@ std::vector<pm::type::Team> pm::bll::TeamStore::teams = {};
 //constructor to pull the database info on start of program
 pm::bll::TeamStore::TeamStore()
 {
-    database.pullDb(&teams);
+	database.pullDb<pm::type::Team>(&teams, "teams.txt", 7, &pm::dal::db::saveTeam);
 }
 
 

@@ -9,7 +9,7 @@ pm::type::User pm::bll::UserStore::loggedInUser = {};
 pm::bll::UserStore::UserStore()
 {
 	users.push_back(admin);
-	database.pullDb(&users);
+	database.pullDb<pm::type::User>(&users, "users.txt", 10, &pm::dal::db::saveUser);
 
 }
 
