@@ -29,6 +29,7 @@ void pm::bll::assignTeamsMenu(ProjectManager* manager, size_t id) {
 void pm::bll::projectsManagmentMenu(ProjectManager* manager) {
 	system("cls");
 
+	std::vector<size_t> projects = manager->pstore.ProjectsWithUser();
 	size_t id;
 	std::vector<std::string> options = { "List projects",
 										 "Update project",
@@ -53,7 +54,18 @@ void pm::bll::projectsManagmentMenu(ProjectManager* manager) {
 
 		std::cout << "Enter id of project\n";
 		std::cin >> id;
-		manager->pstore.update(manager->pstore.create(), id);
+
+		if (id + 1 > manager->pstore.projects.size() || id < 0) {
+			std::cout << "Id out of range\n";
+			system("pause");
+			projectsManagmentMenu(manager);
+		}
+
+		else if(manager->ustore.loggedInUser.admin == 0 && std::find(projects.begin(), projects.end(), id) == projects.end())
+			std::cout << "You don't have the privileges to alter this project.\n";
+
+		else
+			manager->pstore.update(manager->pstore.create(), id);
 
 		system("pause");
 		projectsManagmentMenu(manager);
@@ -66,6 +78,17 @@ void pm::bll::projectsManagmentMenu(ProjectManager* manager) {
 
 		std::cout << "Enter id of project\n";
 		std::cin >> id;
+
+		if (id + 1 > manager->pstore.projects.size() || id < 0) {
+			std::cout << "Id out of range\n";
+			system("pause");
+			projectsManagmentMenu(manager);
+		}
+
+		else if (manager->ustore.loggedInUser.admin == 0 && std::find(projects.begin(), projects.end(), id) == projects.end())
+			std::cout << "You don't have the privileges to alter this project.\n";
+
+		else
 		manager->pstore.remove(id);
 
 		system("pause");
@@ -76,6 +99,8 @@ void pm::bll::projectsManagmentMenu(ProjectManager* manager) {
 		//add a new projects
 	case 3:
 		system("cls");
+
+
 		manager->pstore.add(manager->pstore.create());
 
 		system("pause");
@@ -94,7 +119,9 @@ void pm::bll::projectsManagmentMenu(ProjectManager* manager) {
 			std::cout << "Id out of range\n";
 			system("pause");
 			projectsManagmentMenu(manager);
-		}
+		}		
+		else if (manager->ustore.loggedInUser.admin == 0 && std::find(projects.begin(), projects.end(), id) == projects.end())
+			std::cout << "You don't have the privileges to alter this project.\n";
 
 		else
 			assignTeamsMenu(manager, id);
@@ -161,6 +188,14 @@ void pm::bll::teamsManagmentMenu(ProjectManager* manager) {
 
 		std::cout << "Enter id of team\n";
 		std::cin >> id;
+
+		if (id + 1 > manager->tstore.teams.size() || id < 0) {
+			std::cout << "Id out of range\n";
+			system("pause");
+			teamsManagmentMenu(manager);
+		}
+
+		else
 		manager->tstore.update(manager->tstore.create(), id);
 
 		system("pause");
@@ -174,6 +209,14 @@ void pm::bll::teamsManagmentMenu(ProjectManager* manager) {
 
 		std::cout << "Enter id of team\n";
 		std::cin >> id;
+
+		if (id + 1 > manager->tstore.teams.size() || id < 0) {
+			std::cout << "Id out of range\n";
+			system("pause");
+			teamsManagmentMenu(manager);
+		}
+
+		else
 		manager->tstore.remove(id);
 
 		system("pause");
@@ -184,6 +227,7 @@ void pm::bll::teamsManagmentMenu(ProjectManager* manager) {
 	//add a new team
 	case 3:
 		system("cls");
+
 		manager->tstore.add(manager->tstore.create());
 
 		system("pause");
@@ -243,7 +287,14 @@ void pm::bll::usersManagmentMenu(ProjectManager* manager) {
 
 		std::cout << "Enter an id\n";
 		std::cin >> id;
+		
+		if (id + 1 > manager->ustore.users.size() || id < 0) {
+			std::cout << "Id out of range\n";
+			system("pause");
+			teamsManagmentMenu(manager);
+		}
 
+		else
 		manager->ustore.update(manager->ustore.create(), id);
 
 		system("pause");
@@ -268,6 +319,7 @@ void pm::bll::usersManagmentMenu(ProjectManager* manager) {
 	//add new user
 	case 3:
 		system("cls");
+
 		manager->ustore.add(manager->ustore.create());
 
 		system("pause");
@@ -352,6 +404,7 @@ void pm::bll::mainMenu(ProjectManager* manager)
 		std::vector<std::string> options = { "Your user",
 													 "Your teams",
 													 "Your projects",
+													 "Project actions",
 													 "Log out",
 													 "Back" };
 
@@ -368,14 +421,18 @@ void pm::bll::mainMenu(ProjectManager* manager)
 			break;
 		case 2:
 			//list all projects that the logged in user is a part of
-			manager->pstore.listProjectsWithUser();
+			manager->pstore.listByIds(manager->pstore.ProjectsWithUser());
 			system("pause");
 			break;
 		case 3:
+			//give the user options for editing his teams
+			projectsManagmentMenu(manager);
+			break;
+		case 4:
 			manager->ustore.loggedInUser = noUser;
 			break;
 
-		case 4:
+		case 5:
 			exit(0);
 			break;
 		}

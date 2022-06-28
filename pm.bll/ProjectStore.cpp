@@ -67,7 +67,7 @@ void pm::bll::ProjectStore::update(pm::type::Project project, size_t id)
 		project.idOfCreator = projects[id].idOfCreator;
 		project.lastChange = time(NULL);
 		project.idOfChanger = UserStore::loggedInUser.id;
-
+		project.members = projects[id].members;
 
 		projects.insert(projects.begin() + project.id + 1, project);
 		projects.erase(projects.begin() + project.id);
@@ -147,7 +147,7 @@ void pm::bll::ProjectStore::assign(size_t id, std::vector<size_t> members)
 }
 
 //list all projects that contain a team id
-void pm::bll::ProjectStore::listProjectsWithUser()
+std::vector<size_t> pm::bll::ProjectStore::ProjectsWithUser()
 {
 
 
@@ -167,10 +167,14 @@ void pm::bll::ProjectStore::listProjectsWithUser()
 	std::sort(projectsIds.begin(), projectsIds.end());
 
 	//display the projects the team is a part of
-	if (flag) {
-		for (auto i : projectsIds)
-			listById(i);
-	}
-	else
+	if (!flag)
 		std::cout << "You are a part of no projects\n";
+
+	return projectsIds;
+}
+
+void pm::bll::ProjectStore::listByIds(std::vector<size_t> v)
+{
+	for (auto i : v)
+		listById(i);
 }

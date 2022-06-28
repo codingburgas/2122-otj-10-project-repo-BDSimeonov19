@@ -68,6 +68,7 @@ void pm::bll::TeamStore::update(pm::type::Team team, size_t id)
 		team.idOfCreator = teams[id].idOfCreator;
 		team.lastChange = time(NULL);
 		team.idOfChanger = UserStore::getLoggedUser().id;
+		team.members = teams[id].members;
 
 
 		teams.insert(teams.begin() + team.id + 1, team);
