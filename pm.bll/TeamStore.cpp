@@ -150,14 +150,14 @@ void pm::bll::TeamStore::assign(size_t id, std::vector<size_t> members)
 
 
 //return all teams that contain a user id
-std::vector<size_t> pm::bll::TeamStore::TeamsWithUser()
+std::vector<size_t> pm::bll::TeamStore::TeamsWithUser(size_t id)
 {
 	bool flag = false;
 	std::vector<size_t> teamsIds;
 
 	//find all teams the user is in
 	for (auto i : teams) {
-		if (std::find(i.members.begin(), i.members.end(), UserStore::loggedInUser.id) != i.members.end()) {
+		if (std::find(i.members.begin(), i.members.end(), id) != i.members.end()) {
 			teamsIds.push_back(i.id);
 			flag = true;
 		}

@@ -158,6 +158,7 @@
     <ClInclude Include="ProjectManager.h" />
     <ClInclude Include="ProjectStore.h" />
     <ClInclude Include="sha256.h" />
+    <ClInclude Include="TaskStore.h" />
     <ClInclude Include="TeamStore.h" />
     <ClInclude Include="UserStore.h" />
   </ItemGroup>
@@ -172,6 +173,7 @@
     <ClCompile Include="pm.bll.cpp" />
     <ClCompile Include="ProjectStore.cpp" />
     <ClCompile Include="sha256.cpp" />
+    <ClCompile Include="TaskStore.cpp" />
     <ClCompile Include="TeamStore.cpp" />
     <ClCompile Include="UserStore.cpp" />
   </ItemGroup>

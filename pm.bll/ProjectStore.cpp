@@ -147,14 +147,14 @@ void pm::bll::ProjectStore::assign(size_t id, std::vector<size_t> members)
 }
 
 //list all projects that contain a team id
-std::vector<size_t> pm::bll::ProjectStore::ProjectsWithUser()
+std::vector<size_t> pm::bll::ProjectStore::ProjectsWithUser(size_t id)
 {
 
 
 	bool flag = false;
 	std::vector<size_t> projectsIds;
 
-	for (auto k : TeamStore::TeamsWithUser()) {
+	for (auto k : TeamStore::TeamsWithUser(id)) {
 		//find all projects the team is in
 		for (auto i : projects) {
 			if (std::find(i.members.begin(), i.members.end(), k) != i.members.end()) {

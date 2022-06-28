@@ -27,7 +27,7 @@ namespace pm::bll {
 		void listById(size_t);
 		void listAll();
 		void assign(size_t, std::vector<size_t>);
-		static std::vector<size_t> TeamsWithUser();
+		static std::vector<size_t> TeamsWithUser(size_t);
 		void listByIds(std::vector<size_t>);
 		void removeFromTeam(size_t);
 	};
