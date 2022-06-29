@@ -101,6 +101,9 @@ void pm::bll::TaskStore::listById(size_t id)
 
 		std::cout << "Id : " << tasks[id].id << std::endl;
 		std::cout << "Name : " << tasks[id].name << std::endl;
+		std::cout << "Description : " << tasks[id].description << std::endl;
+		std::cout << "Id of project : " << tasks[id].idOfProject << std::endl;
+		std::cout << "Assignee : " << tasks[id].assignee << std::endl;
 
 		//translate time_t into human readable format
 		localtime_s(&time, &tasks[id].createdOn);

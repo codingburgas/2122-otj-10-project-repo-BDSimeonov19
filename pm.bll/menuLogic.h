@@ -11,6 +11,7 @@ namespace pm::bll {
 	void usersManagmentMenu(pm::bll::ProjectManager*);
 	void teamsManagmentMenu(pm::bll::ProjectManager*);
 	void projectsManagmentMenu(pm::bll::ProjectManager*);
+	void tasksManagmentMenu(pm::bll::ProjectManager*);
 	void assignUsersMenu(pm::bll::ProjectManager*, size_t);
 	void assignTeamsMenu(pm::bll::ProjectManager*, size_t);
 }
