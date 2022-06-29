@@ -35,13 +35,13 @@ void pm::bll::projectsManagmentMenu(ProjectManager* manager) {
 										 "Update project",
 										 "Remove project",
 										 "Create project",
-										 "Assign memebers",
+										 "Assign memebers"
+										 "Tasks",
 										 "Back" };
 
 	switch (pm::pl::Menu(options, manager)) {
 		//list all projects
 	case 0:
-		system("cls");
 		manager->pstore.listAll();
 
 		system("pause");
@@ -111,8 +111,11 @@ void pm::bll::projectsManagmentMenu(ProjectManager* manager) {
 
 		break;
 
-		//go back
 	case 5:
+		
+		break;
+		//go back
+	case 6:
 
 		mainMenu(manager);
 		break;
