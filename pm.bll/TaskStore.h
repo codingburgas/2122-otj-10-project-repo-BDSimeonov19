@@ -27,5 +27,6 @@ namespace pm::bll {
 		void listById(size_t);
 		void listAll();
 		void listByIds(std::vector<size_t>);
+		std::vector<size_t> TasksWithUser(size_t);
 	};
 }

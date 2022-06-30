@@ -2,9 +2,10 @@
 #include "menuLogic.h"
 
 void pm::bll::tasksManagmentMenu(ProjectManager* manager) {
+	std::vector<size_t> tasks = manager->tskstore.TasksWithUser(manager->ustore.loggedInUser.id);
+	std::vector<size_t> projects = manager->pstore.ProjectsWithUser(manager->ustore.loggedInUser.id);
 	system("cls");
 
-	//std::vector<size_t> tasks = manager->pstore.ProjectsWithUser(manager->ustore.loggedInUser.id);
 	size_t id;
 	std::vector<std::string> options = { "List tasks",
 										 "Update task",
@@ -15,7 +16,11 @@ void pm::bll::tasksManagmentMenu(ProjectManager* manager) {
 	switch (pm::pl::Menu(options, manager)) {
 		//list all tasks
 	case 0:
-		manager->tskstore.listAll();
+
+		if (manager->ustore.loggedInUser.admin == 0)
+			manager->tskstore.listByIds(tasks);
+		else
+			manager->tskstore.listAll();
 
 		system("pause");
 		tasksManagmentMenu(manager);
@@ -27,10 +32,10 @@ void pm::bll::tasksManagmentMenu(ProjectManager* manager) {
 		std::cout << "Enter id of task to update\n";
 		std::cin >> id;
 
-		/*if (manager->ustore.loggedInUser.admin == 0 && std::find(projects.begin(), projects.end(), id) == projects.end())
-			std::cout << "You don't have the privileges to alter this project.\n";
+		if (manager->ustore.loggedInUser.admin == 0 && std::find(tasks.begin(), tasks.end(), id) == tasks.end())
+			std::cout << "You don't have the privileges to alter this task.\n";
 
-		else*/
+		else
 			manager->tskstore.update(manager->tskstore.create(0), id);
 
 		system("pause");
@@ -43,10 +48,10 @@ void pm::bll::tasksManagmentMenu(ProjectManager* manager) {
 		std::cout << "Enter id of task\n";
 		std::cin >> id;
 
-		/*if (manager->ustore.loggedInUser.admin == 0 && std::find(projects.begin(), projects.end(), id) == projects.end())
-			std::cout << "You don't have the privileges to alter this project.\n";
+		if (manager->ustore.loggedInUser.admin == 0 && std::find(tasks.begin(), tasks.end(), id) == tasks.end())
+			std::cout << "You don't have the privileges to alter this task.\n";
 
-		else*/
+		else
 			manager->tskstore.remove(id);
 
 		system("pause");
@@ -59,6 +64,11 @@ void pm::bll::tasksManagmentMenu(ProjectManager* manager) {
 
 		std::cout << "Enter id of project to assign a task to\n";
 		std::cin >> id;
+
+		if (manager->ustore.loggedInUser.admin == 0 && std::find(projects.begin(), projects.end(), id) == projects.end())
+			std::cout << "You don't have the privileges to alter this project's tasks.\n";
+
+		else
 
 		manager->tskstore.add(manager->tskstore.create(id));
 
@@ -417,6 +427,7 @@ void pm::bll::mainMenu(ProjectManager* manager)
 													 "Your teams",
 													 "Your projects",
 													 "Project actions",
+													 "Your tasks",
 													 "Log out",
 													 "Back" };
 
@@ -441,10 +452,14 @@ void pm::bll::mainMenu(ProjectManager* manager)
 			projectsManagmentMenu(manager);
 			break;
 		case 4:
+			//show tasks and task options that apply to the user
+			tasksManagmentMenu(manager);
+			break;
+		case 5:
 			manager->ustore.loggedInUser = noUser;
 			break;
 
-		case 5:
+		case 6:
 			exit(0);
 			break;
 		}

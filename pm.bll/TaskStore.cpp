@@ -103,7 +103,7 @@ void pm::bll::TaskStore::listById(size_t id)
 		std::cout << "Id : " << tasks[id].id << std::endl;
 		std::cout << "Name : " << tasks[id].name << std::endl;
 		std::cout << "Description : " << tasks[id].description << std::endl;
-		std::cout << "Id of project : " << pm::bll::ProjectStore::getById(tasks[id].idOfProject).name << std::endl;
+		std::cout << "Project assigned to : " << pm::bll::ProjectStore::getById(tasks[id].idOfProject).name << std::endl;
 		std::cout << "Assignee : " << pm::bll::UserStore::getById(tasks[id].assignee).firstName << " " << pm::bll::UserStore::getById(tasks[id].assignee).lastName << std::endl;
 
 		//translate time_t into human readable format
@@ -134,4 +134,29 @@ void pm::bll::TaskStore::listAll()
 void pm::bll::TaskStore::listByIds(std::vector<size_t> ids) {
 	for (auto i : ids)
 		listById(i);
+}
+
+//list all tasks that contain a team id
+std::vector<size_t> pm::bll::TaskStore::TasksWithUser(size_t id)
+{
+	bool flag = false;
+	std::vector<size_t> tasksIds;
+
+	for (auto k : ProjectStore::ProjectsWithUser(id)) {
+		//find all tasks that apply to projects the user is in
+		for (auto i : tasks) {
+			if (i.idOfProject == k) {
+				tasksIds.push_back(i.id);
+				flag = true;
+			}
+		}
+	}
+
+	std::sort(tasksIds.begin(), tasksIds.end());
+
+	//display the tasks the team is a part of
+	if (!flag)
+		std::cout << "You are a part of no projects\n";
+
+	return tasksIds;
 }
