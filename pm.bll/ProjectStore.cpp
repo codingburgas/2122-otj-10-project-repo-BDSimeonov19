@@ -16,7 +16,7 @@ pm::type::Project pm::bll::ProjectStore::create()
 	pm::type::Project project;
 
 
-	std::cout << "Project name\n";
+	std::cout << "Project name (one word only)\n";
 	std::cin >> project.name;
 	std::cout << "Project description\n";
 	std::cin.ignore();

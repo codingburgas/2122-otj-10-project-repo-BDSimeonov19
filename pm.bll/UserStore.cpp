@@ -19,7 +19,7 @@ pm::type::User pm::bll::UserStore::create() {
 	pm::type::User user;
 
 
-	std::cout << "First and last names\n";
+	std::cout << "First and last names (one word only)\n";
 	std::cin >> user.firstName >> user.lastName;
 	std::cout << "Email\n";
 	std::cin >> user.Email;

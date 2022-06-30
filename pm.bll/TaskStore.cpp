@@ -14,7 +14,7 @@ pm::type::Task pm::bll::TaskStore::create(size_t projectId)
 	pm::type::Task task;
 
 
-	std::cout << "Task name\n";
+	std::cout << "Task name (one word only)\n";
 	std::cin >> task.name;
 	std::cout << "Task description\n";
 	std::cin.ignore();
@@ -24,6 +24,9 @@ pm::type::Task pm::bll::TaskStore::create(size_t projectId)
 
 	std::cout << "Asignee id\n";
 	std::cin >> task.assignee;
+
+	std::cout << "Status of task\n";
+	std::cin >> task.status;
 
 	task.idOfProject = projectId;
 	task.createdOn = time(NULL);
@@ -105,6 +108,15 @@ void pm::bll::TaskStore::listById(size_t id)
 		std::cout << "Description : " << tasks[id].description << std::endl;
 		std::cout << "Project assigned to : " << pm::bll::ProjectStore::getById(tasks[id].idOfProject).name << std::endl;
 		std::cout << "Assignee : " << pm::bll::UserStore::getById(tasks[id].assignee).firstName << " " << pm::bll::UserStore::getById(tasks[id].assignee).lastName << std::endl;
+		std::cout << "Status : ";
+		switch (tasks[id].status) {
+		case 0:
+			std::cout << "Pending\n"; break;
+		case 1:
+			std::cout << "In progress\n"; break;
+		case 2:
+			std::cout << "Completed\n"; break;
+		}
 
 		//translate time_t into human readable format
 		localtime_s(&time, &tasks[id].createdOn);

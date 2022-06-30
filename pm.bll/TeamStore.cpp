@@ -16,7 +16,7 @@ pm::type::Team pm::bll::TeamStore::create()
 	pm::type::Team team;
 
 
-	std::cout << "Team name\n";
+	std::cout << "Team name (one word only)\n";
 	std::cin >> team.name;
 
 	team.createdOn = time(NULL);

@@ -175,10 +175,14 @@ void pm::bll::projectsManagmentMenu(ProjectManager* manager) {
 		std::cin >> id;
 		system("cls");
 
-		if (manager->ustore.loggedInUser.admin == 0 && std::find(projects.begin(), projects.end(), id) == projects.end())
+		if (manager->ustore.loggedInUser.admin == 0 && std::find(projects.begin(), projects.end(), id) == projects.end()) {
 			std::cout << "You don't have the privileges to alter this project.\n";
-		else if (id + 1 > manager->pstore.projects.size() || id < 0)
+			system("pause");
+		}
+		else if (id + 1 > manager->pstore.projects.size() || id < 0) {
 			std::cout << "Id out of range\n";
+			system("pause");
+		}
 		else
 			assignTeamsMenu(manager, id);
 
@@ -434,7 +438,7 @@ void pm::bll::mainMenu(ProjectManager* manager)
 		switch (pm::pl::Menu(options, manager)) {
 		case 0:
 			//list the user data that matches the logged in user
-			manager->tstore.listById(manager->ustore.loggedInUser.id);
+			manager->ustore.listById(manager->ustore.loggedInUser.id);
 			system("pause");
 			break;
 		case 1:
