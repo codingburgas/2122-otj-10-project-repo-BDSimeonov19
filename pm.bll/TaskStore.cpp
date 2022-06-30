@@ -4,7 +4,7 @@
 //constructor to pull the database info on start of program
 pm::bll::TaskStore::TaskStore()
 {
-	//database.pullDb<pm::type::Task>(&teams, "teams.txt", 7, &pm::dal::db::saveTeam);
+	database.pullDb<pm::type::Task>(&tasks, "tasks.txt", 10, &pm::dal::db::saveTask);
 }
 
 
@@ -41,7 +41,7 @@ void pm::bll::TaskStore::add(pm::type::Task team)
 	team.id += tasks.size();
 	tasks.push_back(team);
 
-	//database.updateDb(tasks);
+	database.updateDb(tasks);
 }
 
 //return all tasks
@@ -60,7 +60,7 @@ void pm::bll::TaskStore::remove(size_t id)
 		for (int i = id; i < tasks.size(); i++)
 			tasks[i].id--;
 
-		//database.updateDb(tasks);
+		database.updateDb(tasks);
 	}
 }
 
@@ -80,7 +80,7 @@ void pm::bll::TaskStore::update(pm::type::Task task, size_t id)
 		tasks.insert(tasks.begin() + task.id + 1, task);
 		tasks.erase(tasks.begin() + task.id);
 
-		//database.updateDb(tasks);
+		database.updateDb(tasks);
 	}
 }
 

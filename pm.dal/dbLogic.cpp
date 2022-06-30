@@ -76,6 +76,24 @@ pm::type::Project pm::dal::db::saveProject(std::vector<std::string> data) {
     return project;
 }
 
+//saves the passed data to a Task
+pm::type::Task pm::dal::db::saveTask(std::vector<std::string> data) {
+    pm::type::Task task;
+    task.id = std::stoi(data[0]);
+    task.name = data[1];
+    task.description = data[2];
+    task.idOfProject = std::stoi(data[3]);
+    task.assignee = std::stoi(data[4]);
+    task.status = std::stoi(data[5]);
+
+    task.createdOn = std::stoi(data[6]);
+    task.idOfCreator = std::stoi(data[7]);
+    task.lastChange = std::stoi(data[8]);
+    task.idOfChanger = std::stoi(data[9]);
+
+    return task;
+}
+
 //updates the user database
 void pm::dal::db::updateDb(std::vector<pm::type::User> users)
 {
@@ -157,6 +175,33 @@ void pm::dal::db::updateDb(std::vector<pm::type::Project> projects)
             else
                 database.db << "-^";
 
+            database.db << i.createdOn << '^';
+            database.db << i.idOfCreator << '^';
+            database.db << i.lastChange << '^';
+            database.db << i.idOfChanger << std::endl;
+        }
+
+        database.db.close();
+    }
+    else
+        std::cerr << "An error has occured" << std::endl;
+}
+
+//updates the task database
+void pm::dal::db::updateDb(std::vector<pm::type::Task> tasks)
+{
+    pm::dal::db database;
+
+    database.db.open("tasks.txt", std::ios::out);
+
+    if (database.db.is_open()) {
+        for (auto i : tasks) {
+            database.db << i.id << '^';
+            database.db << i.name << '^';
+            database.db << i.description << '^';
+            database.db << i.idOfProject << '^';
+            database.db << i.assignee << '^';
+            database.db << i.status << '^';
             database.db << i.createdOn << '^';
             database.db << i.idOfCreator << '^';
             database.db << i.lastChange << '^';
