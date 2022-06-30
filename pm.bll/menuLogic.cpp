@@ -6,14 +6,14 @@ void pm::bll::tasksManagmentMenu(ProjectManager* manager) {
 
 	//std::vector<size_t> tasks = manager->pstore.ProjectsWithUser(manager->ustore.loggedInUser.id);
 	size_t id;
-	std::vector<std::string> options = { "List projects",
-										 "Update project",
-										 "Remove project",
-										 "Create project",
+	std::vector<std::string> options = { "List tasks",
+										 "Update task",
+										 "Remove task",
+										 "Create task",
 										 "Back" };
 
 	switch (pm::pl::Menu(options, manager)) {
-		//list all projects
+		//list all tasks
 	case 0:
 		manager->tskstore.listAll();
 
@@ -21,50 +21,51 @@ void pm::bll::tasksManagmentMenu(ProjectManager* manager) {
 		tasksManagmentMenu(manager);
 		break;
 
-		//update a projects by id
+		//update a tasks by id
 	case 1:
 
-		std::cout << "Enter id of project\n";
-		std::cin >> id;
-
-		/*if (manager->ustore.loggedInUser.admin == 0 && std::find(projects.begin(), projects.end(), id) == projects.end())
-			std::cout << "You don't have the privileges to alter this project.\n";
-
-		else
-			manager->pstore.update(manager->pstore.create(), id);*/
-
-		system("pause");
-		tasksManagmentMenu(manager);
-
-		break;
-
-		//remove a projects by id
-	case 2:
-		std::cout << "Enter id of project\n";
+		std::cout << "Enter id of task to update\n";
 		std::cin >> id;
 
 		/*if (manager->ustore.loggedInUser.admin == 0 && std::find(projects.begin(), projects.end(), id) == projects.end())
 			std::cout << "You don't have the privileges to alter this project.\n";
 
 		else*/
-			manager->pstore.remove(id);
+			manager->tskstore.update(manager->tskstore.create(0), id);
 
 		system("pause");
 		tasksManagmentMenu(manager);
 
 		break;
 
-		//add a new projects
+		//remove a tasks by id
+	case 2:
+		std::cout << "Enter id of task\n";
+		std::cin >> id;
+
+		/*if (manager->ustore.loggedInUser.admin == 0 && std::find(projects.begin(), projects.end(), id) == projects.end())
+			std::cout << "You don't have the privileges to alter this project.\n";
+
+		else*/
+			manager->tskstore.remove(id);
+
+		system("pause");
+		tasksManagmentMenu(manager);
+
+		break;
+
+		//add a new tasks
 	case 3:
 
-		manager->pstore.add(manager->pstore.create());
+		std::cout << "Enter id of project to assign a task to\n";
+		std::cin >> id;
+
+		manager->tskstore.add(manager->tskstore.create(id));
 
 		system("pause");
 		tasksManagmentMenu(manager);
 
 		break;
-
-		//assign teams to a projects
 		//go back
 	case 4:
 
@@ -88,7 +89,7 @@ void pm::bll::assignTeamsMenu(ProjectManager* manager, size_t id) {
 		//if done is selected, assign the chosen members
 		if (choice == options.size() - 1) {
 			manager->pstore.assign(id, members);
-			projectsManagmentMenu(manager);
+			break;
 		}
 
 		//if a user is selected, add them to a list and remove them from options
@@ -99,15 +100,15 @@ void pm::bll::assignTeamsMenu(ProjectManager* manager, size_t id) {
 }
 
 void pm::bll::projectsManagmentMenu(ProjectManager* manager) {
+	std::vector<size_t> projects = manager->pstore.ProjectsWithUser(manager->ustore.loggedInUser.id);
 	system("cls");
 
-	std::vector<size_t> projects = manager->pstore.ProjectsWithUser(manager->ustore.loggedInUser.id);
 	size_t id;
 	std::vector<std::string> options = { "List projects",
 										 "Update project",
 										 "Remove project",
 										 "Create project",
-										 "Assign memebers"
+										 "Assign memebers",
 										 "Back" };
 
 	switch (pm::pl::Menu(options, manager)) {
@@ -116,7 +117,6 @@ void pm::bll::projectsManagmentMenu(ProjectManager* manager) {
 		manager->pstore.listAll();
 
 		system("pause");
-		projectsManagmentMenu(manager);
 		break;
 
 		//update a projects by id
@@ -132,7 +132,6 @@ void pm::bll::projectsManagmentMenu(ProjectManager* manager) {
 			manager->pstore.update(manager->pstore.create(), id);
 
 		system("pause");
-		projectsManagmentMenu(manager);
 
 		break;
 
@@ -148,7 +147,6 @@ void pm::bll::projectsManagmentMenu(ProjectManager* manager) {
 			manager->pstore.remove(id);
 
 		system("pause");
-		projectsManagmentMenu(manager);
 
 		break;
 
@@ -158,7 +156,6 @@ void pm::bll::projectsManagmentMenu(ProjectManager* manager) {
 		manager->pstore.add(manager->pstore.create());
 
 		system("pause");
-		projectsManagmentMenu(manager);
 
 		break;
 
@@ -170,7 +167,8 @@ void pm::bll::projectsManagmentMenu(ProjectManager* manager) {
 
 		if (manager->ustore.loggedInUser.admin == 0 && std::find(projects.begin(), projects.end(), id) == projects.end())
 			std::cout << "You don't have the privileges to alter this project.\n";
-
+		else if (id + 1 > manager->pstore.projects.size() || id < 0)
+			std::cout << "Id out of range\n";
 		else
 			assignTeamsMenu(manager, id);
 
@@ -182,6 +180,8 @@ void pm::bll::projectsManagmentMenu(ProjectManager* manager) {
 		mainMenu(manager);
 		break;
 	}
+
+	projectsManagmentMenu(manager);
 }
 
 void pm::bll::assignUsersMenu(ProjectManager* manager, size_t id) {
@@ -199,7 +199,7 @@ void pm::bll::assignUsersMenu(ProjectManager* manager, size_t id) {
 		//if done is selected, assign the chosen members
 		if (choice == options.size() - 1) {
 			manager->tstore.assign(id, members);
-			teamsManagmentMenu(manager);
+			break;
 		}
 
 		//if a user is selected, add them to a list and remove them from options
@@ -226,7 +226,6 @@ void pm::bll::teamsManagmentMenu(ProjectManager* manager) {
 		manager->tstore.listAll();
 
 		system("pause");
-		teamsManagmentMenu(manager);
 		break;
 
 		//update a team by id
@@ -238,7 +237,6 @@ void pm::bll::teamsManagmentMenu(ProjectManager* manager) {
 		manager->tstore.update(manager->tstore.create(), id);
 
 		system("pause");
-		teamsManagmentMenu(manager);
 
 		break;
 
@@ -252,7 +250,6 @@ void pm::bll::teamsManagmentMenu(ProjectManager* manager) {
 		manager->tstore.remove(id);
 
 		system("pause");
-		teamsManagmentMenu(manager);
 
 		break;
 
@@ -262,7 +259,6 @@ void pm::bll::teamsManagmentMenu(ProjectManager* manager) {
 		manager->tstore.add(manager->tstore.create());
 
 		system("pause");
-		teamsManagmentMenu(manager);
 
 		break;
 
@@ -282,6 +278,7 @@ void pm::bll::teamsManagmentMenu(ProjectManager* manager) {
 		mainMenu(manager);
 		break;
 	}
+	teamsManagmentMenu(manager);
 }
 
 void pm::bll::usersManagmentMenu(ProjectManager* manager) {
@@ -300,7 +297,6 @@ void pm::bll::usersManagmentMenu(ProjectManager* manager) {
 	case 0:
 		manager->ustore.listAll();
 		system("pause");
-		usersManagmentMenu(manager);
 		break;
 
 		//update user by id
@@ -313,7 +309,6 @@ void pm::bll::usersManagmentMenu(ProjectManager* manager) {
 		manager->ustore.update(manager->ustore.create(), id);
 
 		system("pause");
-		usersManagmentMenu(manager);
 
 		break;
 
@@ -326,7 +321,6 @@ void pm::bll::usersManagmentMenu(ProjectManager* manager) {
 		manager->tstore.removeFromTeam(id);
 
 		system("pause");
-		usersManagmentMenu(manager);
 
 		break;
 
@@ -336,7 +330,6 @@ void pm::bll::usersManagmentMenu(ProjectManager* manager) {
 		manager->ustore.add(manager->ustore.create());
 
 		system("pause");
-		usersManagmentMenu(manager);
 
 		break;
 
@@ -345,6 +338,8 @@ void pm::bll::usersManagmentMenu(ProjectManager* manager) {
 		mainMenu(manager);
 		break;
 	}
+
+	usersManagmentMenu(manager);
 }
 
 void pm::bll::logInMenu(ProjectManager* manager) {
@@ -388,6 +383,7 @@ void pm::bll::mainMenu(ProjectManager* manager)
 		std::vector<std::string> options = { "Users",
 													 "Teams",
 													 "Projects",
+													 "Tasks",
 													 "Log out",
 													 "Exit" };
 
@@ -403,10 +399,13 @@ void pm::bll::mainMenu(ProjectManager* manager)
 			projectsManagmentMenu(manager);
 			break;
 		case 3:
+			tasksManagmentMenu(manager);
+			break;
+		case 4:
 			manager->ustore.loggedInUser = noUser;
 			mainMenu(manager);
 			break;
-		case 4:
+		case 5:
 			exit(0);
 			break;
 		}

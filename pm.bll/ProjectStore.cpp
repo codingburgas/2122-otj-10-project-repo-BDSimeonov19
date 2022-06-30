@@ -1,6 +1,9 @@
 #include "pch.h"
 #include "ProjectStore.h"
 
+std::vector<pm::type::Project> pm::bll::ProjectStore::projects = {};
+
+
 //constructor to pull the database info on start of program
 pm::bll::ProjectStore::ProjectStore()
 {

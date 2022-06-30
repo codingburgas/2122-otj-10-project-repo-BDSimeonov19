@@ -8,7 +8,7 @@ pm::bll::TaskStore::TaskStore()
 }
 
 
-//create a new team
+//create a new task
 pm::type::Task pm::bll::TaskStore::create(size_t projectId)
 {
 	pm::type::Task task;
@@ -17,7 +17,8 @@ pm::type::Task pm::bll::TaskStore::create(size_t projectId)
 	std::cout << "Task name\n";
 	std::cin >> task.name;
 	std::cout << "Task description\n";
-	std::cin >> task.description;
+	std::cin.ignore();
+	std::getline(std::cin, task.description, '\n');
 
 	
 
@@ -34,7 +35,7 @@ pm::type::Task pm::bll::TaskStore::create(size_t projectId)
 }
 
 
-//add a new team to the database
+//add a new task to the database
 void pm::bll::TaskStore::add(pm::type::Task team)
 {
 	team.id += tasks.size();
@@ -43,13 +44,13 @@ void pm::bll::TaskStore::add(pm::type::Task team)
 	//database.updateDb(tasks);
 }
 
-//return all teams
+//return all tasks
 std::vector<pm::type::Task> pm::bll::TaskStore::getAll()
 {
 	return tasks;
 }
 
-//remove a team by id
+//remove a task by id
 void pm::bll::TaskStore::remove(size_t id)
 {
 	if (id + 1 > tasks.size() || id < 0)
@@ -63,7 +64,7 @@ void pm::bll::TaskStore::remove(size_t id)
 	}
 }
 
-//update a team by id
+//update a task by id
 void pm::bll::TaskStore::update(pm::type::Task task, size_t id)
 {
 	if (id + 1 > tasks.size() || id < 0)
@@ -74,7 +75,7 @@ void pm::bll::TaskStore::update(pm::type::Task task, size_t id)
 		task.idOfCreator = tasks[id].idOfCreator;
 		task.lastChange = time(NULL);
 		task.idOfChanger = UserStore::getLoggedUser().id;
-
+		task.idOfProject = tasks[id].idOfProject;
 
 		tasks.insert(tasks.begin() + task.id + 1, task);
 		tasks.erase(tasks.begin() + task.id);
@@ -83,13 +84,13 @@ void pm::bll::TaskStore::update(pm::type::Task task, size_t id)
 	}
 }
 
-//get a team by id
+//get a task by id
 pm::type::Task pm::bll::TaskStore::getById(size_t id)
 {
 	return tasks[id];
 }
 
-//list team by id
+//list task by id
 void pm::bll::TaskStore::listById(size_t id)
 {
 	if (id + 1 > tasks.size() || id < 0)
@@ -102,8 +103,8 @@ void pm::bll::TaskStore::listById(size_t id)
 		std::cout << "Id : " << tasks[id].id << std::endl;
 		std::cout << "Name : " << tasks[id].name << std::endl;
 		std::cout << "Description : " << tasks[id].description << std::endl;
-		std::cout << "Id of project : " << tasks[id].idOfProject << std::endl;
-		std::cout << "Assignee : " << tasks[id].assignee << std::endl;
+		std::cout << "Id of project : " << pm::bll::ProjectStore::getById(tasks[id].idOfProject).name << std::endl;
+		std::cout << "Assignee : " << pm::bll::UserStore::getById(tasks[id].assignee).firstName << " " << pm::bll::UserStore::getById(tasks[id].assignee).lastName << std::endl;
 
 		//translate time_t into human readable format
 		localtime_s(&time, &tasks[id].createdOn);
@@ -121,7 +122,7 @@ void pm::bll::TaskStore::listById(size_t id)
 	}
 }
 
-//list all teams
+//list all tasks
 void pm::bll::TaskStore::listAll()
 {
 	for (auto i : tasks)
@@ -129,7 +130,7 @@ void pm::bll::TaskStore::listAll()
 }
 
 
-//list teams from a vector
+//list tasks from a vector
 void pm::bll::TaskStore::listByIds(std::vector<size_t> ids) {
 	for (auto i : ids)
 		listById(i);
