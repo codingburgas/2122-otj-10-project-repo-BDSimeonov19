@@ -1,3 +1,6 @@
+# Project documentation can be found [here](https://github.com/BDSimeonov19/OTJ-documentation)
+
+
 # 2122-10: On the job training (OTJ) project
 
 ## 1. Introduction
