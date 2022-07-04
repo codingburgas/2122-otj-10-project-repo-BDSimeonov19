@@ -21,7 +21,7 @@ pm::type::Task pm::bll::TaskStore::create(size_t projectId)
 	std::getline(std::cin, task.description, '\n');
 	std::cout << "Asignee id\n";
 	std::cin >> task.assignee;
-	std::cout << "Status of task\n";
+	std::cout << "Status of task (0 - pending, 1 - in progress, 2 - completed)\n";
 	std::cin >> task.status;
 
 	task.idOfProject = projectId;

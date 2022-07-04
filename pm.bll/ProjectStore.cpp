@@ -160,6 +160,13 @@ std::vector<size_t> pm::bll::ProjectStore::ProjectsWithUser(size_t id)
 			if (std::find(i.members.begin(), i.members.end(), k) != i.members.end()) 
 				projectsIds.push_back(i.id);
 
+	//find all projects the user has created
+	for (auto i : projects)
+		if (i.idOfCreator == id)
+			projectsIds.push_back(i.id);
+
+
+
 	std::sort(projectsIds.begin(), projectsIds.end());
 
 	//display the projects the team is a part of

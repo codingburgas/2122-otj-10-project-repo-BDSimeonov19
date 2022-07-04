@@ -33,7 +33,7 @@ void pm::bll::tasksManagmentMenu(ProjectManager* manager) {
 		std::cin >> id;
 
 		if (manager->ustore.loggedInUser.admin == 0 && std::find(tasks.begin(), tasks.end(), id) == tasks.end())
-			std::cout << "You don't have the privileges to alter this task.\n";
+			std::cout << "You either don't have the privileges to alter this task or you're trying to access an unexisting task.\n";
 
 		else
 			manager->tskstore.update(manager->tskstore.create(0), id);
@@ -49,7 +49,7 @@ void pm::bll::tasksManagmentMenu(ProjectManager* manager) {
 		std::cin >> id;
 
 		if (manager->ustore.loggedInUser.admin == 0 && std::find(tasks.begin(), tasks.end(), id) == tasks.end())
-			std::cout << "You don't have the privileges to alter this task.\n";
+			std::cout << "You either don't have the privileges to alter this task or you're trying to access an unexisting task.\n";
 
 		else
 			manager->tskstore.remove(id);
@@ -66,7 +66,7 @@ void pm::bll::tasksManagmentMenu(ProjectManager* manager) {
 		std::cin >> id;
 
 		if (manager->ustore.loggedInUser.admin == 0 && std::find(projects.begin(), projects.end(), id) == projects.end())
-			std::cout << "You don't have the privileges to alter this project's tasks.\n";
+			std::cout << "You either don't have the privileges to alter this project's tasks or you're trying to access an unexisting project.\n";
 
 		else
 
@@ -118,7 +118,7 @@ void pm::bll::projectsManagmentMenu(ProjectManager* manager) {
 										 "Update project",
 										 "Remove project",
 										 "Create project",
-										 "Assign memebers",
+										 "Assign teams",
 										 "Back" };
 
 	switch (pm::pl::Menu(options, manager)) {
@@ -136,7 +136,7 @@ void pm::bll::projectsManagmentMenu(ProjectManager* manager) {
 		std::cin >> id;
 
 		if (manager->ustore.loggedInUser.admin == 0 && std::find(projects.begin(), projects.end(), id) == projects.end())
-			std::cout << "You don't have the privileges to alter this project.\n";
+			std::cout << "You either don't have the privileges to alter this project or you're trying to access an unexisting project.\n";
 
 		else
 			manager->pstore.update(manager->pstore.create(), id);
@@ -151,7 +151,7 @@ void pm::bll::projectsManagmentMenu(ProjectManager* manager) {
 		std::cin >> id;
 
 		if (manager->ustore.loggedInUser.admin == 0 && std::find(projects.begin(), projects.end(), id) == projects.end())
-			std::cout << "You don't have the privileges to alter this project.\n";
+			std::cout << "You either don't have the privileges to alter this project or you're trying to access an unexisting project.\n";
 
 		else
 			manager->pstore.remove(id);
@@ -176,7 +176,7 @@ void pm::bll::projectsManagmentMenu(ProjectManager* manager) {
 		system("cls");
 
 		if (manager->ustore.loggedInUser.admin == 0 && std::find(projects.begin(), projects.end(), id) == projects.end()) {
-			std::cout << "You don't have the privileges to alter this project.\n";
+			std::cout << "You either don't have the privileges to alter this project or you're trying to access an unexisting project.\n";
 			system("pause");
 		}
 		else if (id + 1 > manager->pstore.projects.size() || id < 0) {
@@ -231,7 +231,7 @@ void pm::bll::teamsManagmentMenu(ProjectManager* manager) {
 										 "Update team",
 										 "Remove team",
 										 "Create team",
-										 "Assign memebers",
+										 "Assign users",
 										 "Back" };
 
 	switch (pm::pl::Menu(options, manager)) {
@@ -282,7 +282,12 @@ void pm::bll::teamsManagmentMenu(ProjectManager* manager) {
 		std::cin >> id;
 		system("cls");
 
-		assignUsersMenu(manager, id);
+		if (id + 1 > manager->tstore.teams.size() || id < 0) {
+			std::cout << "Id out of range\n";
+			system("pause");
+		}
+		else
+			assignUsersMenu(manager, id);
 
 		break;
 
