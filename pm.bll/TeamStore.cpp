@@ -70,7 +70,6 @@ void pm::bll::TeamStore::update(pm::type::Team team, size_t id)
 		team.idOfChanger = UserStore::getLoggedUser().id;
 		team.members = teams[id].members;
 
-
 		teams.insert(teams.begin() + team.id + 1, team);
 		teams.erase(teams.begin() + team.id);
 
@@ -152,21 +151,16 @@ void pm::bll::TeamStore::assign(size_t id, std::vector<size_t> members)
 //return all teams that contain a user id
 std::vector<size_t> pm::bll::TeamStore::TeamsWithUser(size_t id)
 {
-	bool flag = false;
 	std::vector<size_t> teamsIds;
 
 	//find all teams the user is in
-	for (auto i : teams) {
-		if (std::find(i.members.begin(), i.members.end(), id) != i.members.end()) {
+	for (auto i : teams)
+		if (std::find(i.members.begin(), i.members.end(), id) != i.members.end())
 			teamsIds.push_back(i.id);
-			flag = true;
-		}
-	}
 
 	//display the teams the user is a part of
-	if (!flag)
+	if (teamsIds.empty())
 		std::cout << "You are a part of no teams\n";
-
 
 	return teamsIds;
 }

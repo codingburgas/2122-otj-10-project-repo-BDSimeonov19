@@ -4,7 +4,6 @@
 
 int main()
 {
-	
 	pm::bll::ProjectManager manager;
 	pm::bll::mainMenu(&manager);
 }

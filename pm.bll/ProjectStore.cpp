@@ -152,25 +152,18 @@ void pm::bll::ProjectStore::assign(size_t id, std::vector<size_t> members)
 //list all projects that contain a team id
 std::vector<size_t> pm::bll::ProjectStore::ProjectsWithUser(size_t id)
 {
-
-
-	bool flag = false;
 	std::vector<size_t> projectsIds;
 
-	for (auto k : TeamStore::TeamsWithUser(id)) {
+	for (auto k : TeamStore::TeamsWithUser(id))
 		//find all projects the team is in
-		for (auto i : projects) {
-			if (std::find(i.members.begin(), i.members.end(), k) != i.members.end()) {
+		for (auto i : projects)
+			if (std::find(i.members.begin(), i.members.end(), k) != i.members.end()) 
 				projectsIds.push_back(i.id);
-				flag = true;
-			}
-		}
-	}
 
 	std::sort(projectsIds.begin(), projectsIds.end());
 
 	//display the projects the team is a part of
-	if (!flag)
+	if (projectsIds.empty())
 		std::cout << "You are a part of no projects\n";
 
 	return projectsIds;

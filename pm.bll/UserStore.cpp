@@ -26,11 +26,13 @@ pm::type::User pm::bll::UserStore::create() {
 	std::cout << "Age\n";
 	std::cin >> user.age;
 	std::cout << "Enter password\n";
+
 	user.passwordHash = password();
 	user.createdOn = time(NULL);
 	user.idOfCreator = loggedInUser.id;
 	user.lastChange = time(NULL);
 	user.idOfChanger = loggedInUser.id;
+
 	std::cout << "Enter privilege level\n";
 	std::cin >> user.admin;
 
@@ -84,7 +86,6 @@ void pm::bll::UserStore::update(pm::type::User user, size_t id)
 		user.idOfCreator = users[id].idOfCreator;
 		user.lastChange = time(NULL);
 		user.idOfChanger = loggedInUser.id;
-
 
 		users.insert(users.begin() + user.id + 1, user);
 		users.erase(users.begin() + user.id);

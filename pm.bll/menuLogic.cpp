@@ -460,6 +460,7 @@ void pm::bll::mainMenu(ProjectManager* manager)
 			tasksManagmentMenu(manager);
 			break;
 		case 5:
+			//set current logged user to an empty user
 			manager->ustore.loggedInUser = noUser;
 			break;
 

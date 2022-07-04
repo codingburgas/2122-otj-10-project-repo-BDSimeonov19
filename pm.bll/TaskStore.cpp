@@ -19,12 +19,8 @@ pm::type::Task pm::bll::TaskStore::create(size_t projectId)
 	std::cout << "Task description\n";
 	std::cin.ignore();
 	std::getline(std::cin, task.description, '\n');
-
-	
-
 	std::cout << "Asignee id\n";
 	std::cin >> task.assignee;
-
 	std::cout << "Status of task\n";
 	std::cin >> task.status;
 
@@ -151,23 +147,18 @@ void pm::bll::TaskStore::listByIds(std::vector<size_t> ids) {
 //list all tasks that contain a team id
 std::vector<size_t> pm::bll::TaskStore::TasksWithUser(size_t id)
 {
-	bool flag = false;
 	std::vector<size_t> tasksIds;
 
-	for (auto k : ProjectStore::ProjectsWithUser(id)) {
+	for (auto k : ProjectStore::ProjectsWithUser(id))
 		//find all tasks that apply to projects the user is in
-		for (auto i : tasks) {
-			if (i.idOfProject == k) {
+		for (auto i : tasks)
+			if (i.idOfProject == k)
 				tasksIds.push_back(i.id);
-				flag = true;
-			}
-		}
-	}
 
 	std::sort(tasksIds.begin(), tasksIds.end());
 
 	//display the tasks the team is a part of
-	if (!flag)
+	if (tasksIds.empty())
 		std::cout << "You are a part of no projects\n";
 
 	return tasksIds;
